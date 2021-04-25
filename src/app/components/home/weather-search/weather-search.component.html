@@ -2,7 +2,7 @@
     <div class="input-group">
         <span class="search-icon"><i class="fa fa-search "></i></span>
         <input type="text" class="form-control" (click)="toggleDropdownList()" (keyup)="searchItem($event)"
-            [value]="selectedLocation?.LocalizedName" list=" autocompletedList" autofocus>
+            [value]="data" list=" autocompletedList" autofocus>
     </div>
 
     <div class="error-wrapper" *ngIf="autocompletedList.length < 1">

@@ -35,7 +35,8 @@
             <div class="card-body">
                 <span class="day"> {{ item?.Date | date: 'EEEE'}}</span>
 
-                <img class="image-icon" src="../../../../../../assets/icons/0{{item?.Day?.Icon}}-s.png"
+                <img class="image-icon"
+                    src="../../../../../../assets/icons/{{item?.Day?.Icon > 8 ? item?.Day?.Icon : '0' + item?.Day?.Icon }}-s.png"
                     alt="{{item?.Day?.Icon}}">
 
                 <div class="temperature">

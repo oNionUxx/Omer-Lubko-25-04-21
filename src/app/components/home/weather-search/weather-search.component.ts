@@ -20,15 +20,26 @@ export class WeatherSearchComponent implements OnInit {
   ngOnInit(): void {}
 
   showDropdownList = false;
+  data: string;
+
+  ngOnInt(): void {}
+
+  ngOnChanges(): void {
+    if (this.selectedLocation) {
+      this.data = this.selectedLocation.LocalizedName;
+    }
+  }
 
   searchItem(event): void {
     // check for matched pattern
     let pattern = /^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$/;
-    let q = event.target.value.match(pattern);
+    let q = event.target.value;
 
-    if (q) {
+    if (q.match(pattern) && q !== '') {
       this.changedAutocompletedList.emit(q);
     }
+
+    this;
   }
 
   selectItem(location: Autocomplete): void {

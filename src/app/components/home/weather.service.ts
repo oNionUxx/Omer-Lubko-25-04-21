@@ -19,7 +19,7 @@ export class WeatherService {
     return this.http
       .get<Autocomplete[]>(`https://dataservice.accuweather.com/locations/v1/cities/autocomplete?q=${term}&apikey=${environment.apiKey}`)
       .pipe(
-        tap((data) => console.log('Data: ', JSON.stringify(data))),
+        tap((data) => console.log('Data: ')),
         catchError(this.handleError)
       );
   }
@@ -28,17 +28,16 @@ export class WeatherService {
     return this.http
       .get<any[]>(`https://dataservice.accuweather.com/currentconditions/v1/${locationKey}?apikey=${environment.apiKey}`)
       .pipe(
-        tap((data) => console.log('Data: ', JSON.stringify(data))),
+        tap((data) => console.log('Data: ')),
         catchError(this.handleError)
       );
   }
 
   getFiveDaysForecasts(locationKey: string): Observable<any[]> {
-    locationKey = '213181';
     return this.http
       .get<any[]>(`https://dataservice.accuweather.com/forecasts/v1/daily/5day/${locationKey}?apikey=${environment.apiKey}`)
       .pipe(
-        tap((data) => console.log('Data: ', JSON.stringify(data))),
+        tap((data) => console.log('Five Days forecasts: ', JSON.stringify(data))),
         catchError(this.handleError)
       );
   }
