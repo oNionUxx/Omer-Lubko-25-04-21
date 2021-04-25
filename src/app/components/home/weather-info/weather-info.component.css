@@ -56,8 +56,16 @@
 }
 
 .grid-container .grid-item-1 .nested-item-1-b .btn.btn-outline-dark {
+  width: fit-content;
   height: fit-content;
   cursor: pointer;
+}
+
+.grid-container .grid-item-1 .nested-item-1-b .heart-icon {
+  display: inline-block;
+  width: fit-content;
+  height: fit-content;
+  padding: 5px 10px;
 }
 
 .grid-container .grid-item-2 {
@@ -114,4 +122,34 @@
   color: #a9a9a9;
   font-weight: bold;
   font-size: 14px;
+}
+
+@media screen and (max-width: 600px) {
+  .grid-container .grid-item-1 .nested-item-1-a .data > span {
+    letter-spacing: 1px;
+    font-size: 12px;
+  }
+
+  .grid-container .grid-item-1 .nested-item-1-b .heart-icon {
+    padding: 5px;
+  }
+
+  .grid-container .grid-item-3 .card .card-body {
+    justify-content: space-around;
+    padding: 5px;
+  }
+
+  .grid-container .grid-item-3 .card .card-body .day {
+    font-size: 14px;
+  }
+
+  .grid-container .grid-item-3 .card .card-body .image-icon {
+    width: 70px;
+    height: 50px;
+  }
+
+  .grid-container .grid-item-3 .card .card-body .temperature .min,
+  .grid-container .grid-item-3 .card .card-body .temperature .max {
+    font-size: 12px;
+  }
 }

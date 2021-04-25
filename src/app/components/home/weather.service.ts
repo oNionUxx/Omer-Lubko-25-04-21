@@ -17,7 +17,7 @@ export class WeatherService {
 
   getAutoCompleted(term: string): Observable<Autocomplete[]> {
     return this.http
-      .get<Autocomplete[]>(`http://dataservice.accuweather.com/locations/v1/cities/autocomplete?q=${term}&apikey=${environment.apiKey}`)
+      .get<Autocomplete[]>(`https://dataservice.accuweather.com/locations/v1/cities/autocomplete?q=${term}&apikey=${environment.apiKey}`)
       .pipe(
         tap((data) => console.log('Data: ', JSON.stringify(data))),
         catchError(this.handleError)
@@ -25,16 +25,18 @@ export class WeatherService {
   }
 
   getCurrentConditions(locationKey: string): Observable<any[]> {
-    return this.http.get<any[]>(`http://dataservice.accuweather.com/currentconditions/v1/${locationKey}?apikey=${environment.apiKey}`).pipe(
-      tap((data) => console.log('Data: ', JSON.stringify(data))),
-      catchError(this.handleError)
-    );
+    return this.http
+      .get<any[]>(`https://dataservice.accuweather.com/currentconditions/v1/${locationKey}?apikey=${environment.apiKey}`)
+      .pipe(
+        tap((data) => console.log('Data: ', JSON.stringify(data))),
+        catchError(this.handleError)
+      );
   }
 
   getFiveDaysForecasts(locationKey: string): Observable<any[]> {
     locationKey = '213181';
     return this.http
-      .get<any[]>(`http://dataservice.accuweather.com/forecasts/v1/daily/5day/${locationKey}?apikey=${environment.apiKey}`)
+      .get<any[]>(`https://dataservice.accuweather.com/forecasts/v1/daily/5day/${locationKey}?apikey=${environment.apiKey}`)
       .pipe(
         tap((data) => console.log('Data: ', JSON.stringify(data))),
         catchError(this.handleError)

@@ -1,6 +1,6 @@
 .wrapper {
-  height: calc(100vh - 50px);
-  padding: 5px;
+  position: relative;
+  height: 100%;
 }
 
 .wrapper .inner-wrapper {
@@ -9,6 +9,7 @@
   height: 300px;
   gap: 20px;
   padding: 20px;
+  height: 100%;
 }
 
 .wrapper .inner-wrapper .card {
@@ -39,4 +40,15 @@
 
 .wrapper .inner-wrapper .card .card-body span:first-of-type {
   font-size: 22px;
+}
+
+@media screen and (max-width: 600px) {
+  .wrapper .inner-wrapper {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    grid-gap: 24px 40px;
+    height: 100%;
+    grid-gap: 24px 40px;
+  }
 }
