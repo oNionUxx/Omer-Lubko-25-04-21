@@ -1,6 +1,6 @@
 <div class="wrapper">
     <div class="inner-wrapper">
-        <div class="card" *ngFor="let item of favoritesList">
+        <div class="card" *ngFor="let item of favoritesList" (click)="selectItem(item)">
             <div class="card-header">
                 <h2>{{ item?.LocalizedName}}</h2>
             </div>

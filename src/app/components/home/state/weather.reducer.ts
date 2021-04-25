@@ -13,11 +13,27 @@ export interface WeatherState {
 
 /* Initial Weather state */
 const initialState: WeatherState = {
-  autocompletedList: [],
+  autocompletedList: [
+    {
+      AdministrativeArea: {
+        ID: 'TA',
+        LocalizedName: 'Tel Aviv',
+      },
+      Country: {
+        ID: 'IL',
+        LocalizedName: 'Israel',
+      },
+      Key: '215854',
+      LocalizedName: 'Tel Aviv',
+      Rank: 31,
+      Type: 'City',
+      Version: 1,
+    },
+  ],
   currentConditions: [],
   fiveDaysForecasts: [],
   favoritesList: [],
-  currentLocationKey: null,
+  currentLocationKey: '215854',
   error: '',
 };
 

@@ -1,5 +1,5 @@
 export interface Autocomplete {
-  version: number;
+  Version: number;
   Key: string;
   Type: string;
   Rank: number;

@@ -11,6 +11,14 @@
   padding: 20px;
 }
 
+.wrapper .inner-wrapper .card {
+  cursor: pointer;
+}
+
+.wrapper .inner-wrapper .card:hover {
+  background-color: aliceblue;
+}
+
 .wrapper .inner-wrapper .card .card-header {
   display: flex;
   justify-content: center;

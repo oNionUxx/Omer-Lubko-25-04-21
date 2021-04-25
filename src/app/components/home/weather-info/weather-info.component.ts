@@ -1,5 +1,6 @@
 import { Component, Input, OnInit, ChangeDetectionStrategy, Output, EventEmitter } from '@angular/core';
 import { Autocomplete, CurrentConditions, FiveDaysForecasts, Favorite } from '../weather';
+import { FlashMessagesService } from 'angular2-flash-messages';
 
 @Component({
   selector: 'pm-weather-info',
@@ -19,7 +20,7 @@ export class WeatherResultsComponent implements OnInit {
   displayCurrentUnit = -1;
   isShowMetric = true;
 
-  constructor() {}
+  constructor(private fm: FlashMessagesService) {}
 
   ngOnInit(): void {}
 
@@ -29,14 +30,16 @@ export class WeatherResultsComponent implements OnInit {
 
   addToFavorites(): void {
     const location = {
-      Key: this.selectedLocation.Key,
-      LocalizedName: this.selectedLocation.LocalizedName,
+      Key: this.autocompletedList[0].Key,
+      LocalizedName: this.autocompletedList[0].LocalizedName,
       WeatherText: this.currentConditions[0].WeatherText,
       Temperature: this.currentConditions[0].Temperature,
     };
 
     if (!this.favoritesList.find((l) => l.Key === location.Key)) {
       this.addSelectedLocation.emit(location);
+    } else {
+      this.displayUserMessage('Location has been already added..');
     }
   }
 
@@ -48,5 +51,12 @@ export class WeatherResultsComponent implements OnInit {
       this.isShowMetric = false;
       this.displayCurrentUnit = this.currentConditions[0]?.Temperature?.Imperial?.Value;
     }
+  }
+
+  displayUserMessage(errorMessage?: string): void {
+    this.fm.show(errorMessage, {
+      cssClass: 'alert-danger',
+      timeout: 4000,
+    });
   }
 }

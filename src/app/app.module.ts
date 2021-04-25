@@ -1,7 +1,8 @@
 /* Modules */
-import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
+import { FlashMessagesModule } from 'angular2-flash-messages';
 import { SharedModule } from './components/shared/shared.module';
 
 import { AppComponent } from './app.component';
@@ -24,6 +25,7 @@ import { environment } from '../environments/environment';
     BrowserModule,
     AppRoutingModule,
     SharedModule,
+    FlashMessagesModule.forRoot(),
     StoreModule.forRoot({}, {}),
     EffectsModule.forRoot([]),
     StoreDevtoolsModule.instrument({

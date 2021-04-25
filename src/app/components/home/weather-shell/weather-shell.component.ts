@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { Router, NavigationExtras } from '@angular/router';
+import { Router } from '@angular/router';
 
 import { Observable } from 'rxjs';
 
@@ -10,6 +10,7 @@ import { Autocomplete, CurrentConditions, FiveDaysForecasts, Favorite } from '..
 import { Store } from '@ngrx/store';
 import * as WeatherActions from '../actions';
 import { State, getAutoCompletedList, getCurrentLocation, getCurrentConditions, getFiveDaysForecasts, getCurrentList } from '../state';
+import { WeatherService } from '../weather.service';
 
 @Component({
   selector: 'app-weather-shell',
@@ -25,15 +26,12 @@ export class WeatherShellComponent implements OnInit {
 
   selectedLocation$: Observable<Autocomplete>;
 
-  constructor(private store: Store<State>, private router: Router) {}
+  constructor(private store: Store<State>, private router: Router, private weatherService: WeatherService) {}
 
   ngOnInit(): void {
     // Do NOT subscribe here because it uses an async pipe
     // This gets the initial values until the load is complete.
     this.autocompletedList$ = this.store.select(getAutoCompletedList);
-    this.store.dispatch(WeatherActions.loadAutocompletedList({ term: 'tel aviv' }));
-
-    this.locationSelected();
 
     this.selectedLocation$ = this.store.select(getCurrentLocation);
 
@@ -51,11 +49,9 @@ export class WeatherShellComponent implements OnInit {
   }
 
   locationSelected(location?: Autocomplete): void {
-    const KEY = location ? location.Key : '215854';
-
-    this.store.dispatch(WeatherActions.setCurrentLocation({ currentLocationKey: KEY }));
-    this.store.dispatch(WeatherActions.loadCurrentConditions({ locationKey: KEY }));
-    this.store.dispatch(WeatherActions.loadFiveDaysForecasts({ locationKey: KEY }));
+    this.store.dispatch(WeatherActions.setCurrentLocation({ currentLocationKey: location.Key }));
+    this.store.dispatch(WeatherActions.loadCurrentConditions({ locationKey: location.Key }));
+    this.store.dispatch(WeatherActions.loadFiveDaysForecasts({ locationKey: location.Key }));
   }
 
   filterAutocompletedList(selectedLocationKey: string): void {

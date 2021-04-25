@@ -1,5 +1,6 @@
 <div class="wrapper">
     <div class="data">
-        <pm-list-data [favoritesList]="favoritesList$ | async"> </pm-list-data>
+        <pm-list-data [favoritesList]="favoritesList$ | async" (selectedItem)="itemWasSelected($any($event))">
+        </pm-list-data>
     </div>
 </div>

@@ -1,3 +1,24 @@
 .container {
   height: calc(100vh - 50px);
 }
+
+flash-messages {
+  text-align: center;
+  position: fixed;
+  border-radius: 0;
+  left: 0;
+  right: 0;
+  z-index: 999999;
+}
+
+.alert-danger,
+.alert-success {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 75px;
+  border-radius: 0 !important;
+  font-size: 30px !important;
+  font-weight: bold !important;
+  color: #333 !important;
+}
