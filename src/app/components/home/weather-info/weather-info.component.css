@@ -1,0 +1,117 @@
+.grid-container {
+  display: grid;
+  grid-template-rows: 1fr 1fr 2fr;
+  height: 100%;
+  overflow: hidden;
+}
+
+.grid-container .grid-item-1 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.grid-container .grid-item-1 .nested-item-1-a {
+  display: flex;
+  justify-content: flex-start;
+  padding: 10px;
+}
+
+.grid-container .grid-item-1 .nested-item-1-a .times-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: fit-content;
+  border: 1px solid #ccc;
+  border-radius: 2px;
+}
+
+.grid-container .grid-item-1 .nested-item-1-a .data {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
+}
+
+.grid-container .grid-item-1 .nested-item-1-a .data > span {
+  letter-spacing: 2px;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.grid-container .grid-item-1 .nested-item-1-a .data .unit {
+  color: #a9a9a9;
+  font-weight: normal;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.grid-container .grid-item-1 .nested-item-1-a .data .unit.active {
+  font-weight: bold;
+}
+
+.grid-container .grid-item-1 .nested-item-1-b {
+  display: flex;
+  justify-content: flex-end;
+  padding: 10px;
+}
+
+.grid-container .grid-item-1 .nested-item-1-b .btn.btn-outline-dark {
+  height: fit-content;
+  cursor: pointer;
+}
+
+.grid-container .grid-item-2 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.grid-container .grid-item-3 {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+}
+
+.grid-container .grid-item-3 .card {
+  justify-content: center;
+  align-items: center;
+  border: 0px;
+  border-radius: 0px;
+}
+
+.grid-container .grid-item-3 .card .card-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.grid-container .grid-item-3 .card .card-body .day {
+  color: #a9a9a9;
+  font-weight: bold;
+  font-size: 26px;
+  padding: 5px;
+}
+
+.grid-container .grid-item-3 .card .card-body .image-icon {
+  display: inline-block;
+  width: 150px;
+  height: 100px;
+}
+
+.grid-container .grid-item-3 .card .card-body .temperature {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.grid-container .grid-item-3 .card .card-body .temperature .min {
+  color: #a9a9a9;
+  font-size: 14px;
+}
+
+.grid-container .grid-item-3 .card .card-body .temperature .max {
+  color: #a9a9a9;
+  font-weight: bold;
+  font-size: 14px;
+}

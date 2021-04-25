@@ -1,0 +1,55 @@
+<div class="grid-container" *ngIf="currentConditions.length > 0">
+    <div class="grid-item-1">
+        <div class="nested-item-1-a">
+            <span class="times-icon">
+                <i class="fa fa-times fa-5x" aria-hidden="true"></i>
+            </span>
+            <div class="data">
+                <span>{{autocompletedList[0]?.LocalizedName}}</span>
+                <span>{{ displayCurrentUnit }}
+                    &deg;<a href="javascript:void(0)" (click)="toggleUnit('c')" class="unit"
+                        [ngClass]="isShowMetric ? 'active' : null ">{{currentConditions[0]?.Temperature?.Metric?.Unit}}</a>
+                    |
+                    &deg;<a href="javascript:void(0)" (click)="toggleUnit('f')" class="unit"
+                        [ngClass]="!isShowMetric ? 'active' : null ">{{currentConditions[0]?.Temperature?.Imperial?.Unit}}</a>
+                </span>
+            </div>
+        </div>
+
+        <div class="nested-item-1-b">
+            <span class="heart-icon">
+                <i class="fa fa-heart fa-2x pl-3 pr-2" aria-hidden="true"></i>
+            </span>
+
+            <button type="button" class="btn btn-outline-dark" (click)="addToFavorites()">Add To Favorites</button>
+
+        </div>
+    </div>
+
+    <div class="grid-item-2">
+        <h1>{{currentConditions[0]?.WeatherText}}</h1>
+    </div>
+
+    <div class="grid-item-3">
+        <div class="card" *ngFor="let item of this.fiveDaysForecasts['DailyForecasts']; index as i">
+            <div class="card-body">
+                <span class="day"> {{ item?.Date | date: 'EEEE'}}</span>
+
+                <img class="image-icon" src="../../../../../../assets/icons/0{{item?.Day?.Icon}}-s.png"
+                    alt="{{item?.Day?.Icon}}">
+
+                <div class="temperature">
+                    <span class="min">
+                        {{ item.Temperature?.Minimum?.Value | temperatureConverter: isShowMetric ? 'C' : 'F' }}&deg;
+                    </span>
+
+                    &nbsp; &nbsp;
+
+                    <span class="max">
+                        {{ item.Temperature?.Maximum?.Value | temperatureConverter: isShowMetric ? 'C' : 'F' }}&deg;
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

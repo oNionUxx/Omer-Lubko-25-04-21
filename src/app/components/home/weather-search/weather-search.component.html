@@ -1,0 +1,26 @@
+<div class="wrapper">
+    <div class="input-group">
+        <span class="search-icon"><i class="fa fa-search "></i></span>
+        <input type="text" class="form-control" (click)="toggleDropdownList()" (keyup)="searchItem($event)"
+            [value]="selectedLocation?.LocalizedName" list=" autocompletedList" autofocus>
+    </div>
+
+    <div class="error-wrapper" *ngIf="autocompletedList.length < 1">
+        <span class="feedback-error">
+            No results found :(
+        </span>
+    </div>
+
+    <div class="state-container-dropdown" *ngIf="showDropdownList"
+        [ngStyle]="{'border' : autocompletedList.length < 1 ? '0px' : '1px solid #ccc'}">
+        <div class="state" *ngFor="let item of autocompletedList;">
+            <a class=" state-item" (click)="selectItem(item)"> {{ item?.LocalizedName }}</a>
+        </div>
+    </div>
+</div>
+
+
+
+<div *ngIf="errorMessage" class="alert alert-danger">
+    Error: {{ errorMessage }}
+</div>

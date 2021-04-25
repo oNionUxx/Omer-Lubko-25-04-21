@@ -1,0 +1,14 @@
+<div class="wrapper">
+    <div class="inner-wrapper">
+        <div class="card" *ngFor="let item of favoritesList">
+            <div class="card-header">
+                <h2>{{ item?.LocalizedName}}</h2>
+            </div>
+
+            <div class="card-body">
+                <span>{{ item.WeatherText }}</span>
+                <span>{{ item.Temperature.Metric.Value }}&deg;</span>
+            </div>
+        </div>
+    </div>
+</div>
