@@ -1,6 +1,9 @@
 import { createAction, props } from '@ngrx/store';
 import { Favorite } from '../weather';
 
+/* Toggle Product Code Action */
+export const toggleAppTheme = createAction('[Weather Page] Toggle App Theme');
+
 /* Load AutoCompleted List Action */
 export const loadAutocompletedList = createAction('[Weather Page]  Load  Autocompleted List', props<{ term: string }>());
 

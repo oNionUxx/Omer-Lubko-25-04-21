@@ -14,7 +14,6 @@ export class WeatherResultsComponent implements OnInit {
   @Input() currentConditions: CurrentConditions[];
   @Input() fiveDaysForecasts: FiveDaysForecasts[];
   @Input() favoritesList: Favorite[];
-
   @Output() addSelectedLocation = new EventEmitter<Favorite>();
 
   displayCurrentUnit = -1;
@@ -36,11 +35,7 @@ export class WeatherResultsComponent implements OnInit {
       Temperature: this.currentConditions[0].Temperature,
     };
 
-    if (!this.favoritesList.find((l) => l.Key === location.Key)) {
-      this.addSelectedLocation.emit(location);
-    } else {
-      this.displayUserMessage('Location has been already added..');
-    }
+    this.addSelectedLocation.emit(location);
   }
 
   toggleUnit(unit: string) {

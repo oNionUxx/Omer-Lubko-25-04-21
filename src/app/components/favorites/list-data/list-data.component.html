@@ -6,8 +6,10 @@
             </div>
 
             <div class="card-body">
-                <span>{{ item.WeatherText }}</span>
-                <span>{{ item.Temperature.Metric.Value }}&deg;</span>
+                <ul class="list-group">
+                    <li class="list-group-item">{{ item.WeatherText }}</li>
+                    <li class="list-group-item">{{ item.Temperature.Metric.Value }}&deg;</li>
+                </ul>
             </div>
         </div>
     </div>

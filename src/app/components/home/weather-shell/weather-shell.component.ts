@@ -22,9 +22,8 @@ export class WeatherShellComponent implements OnInit {
   currentConditions$: Observable<CurrentConditions[]>;
   fiveDaysForecasts$: Observable<FiveDaysForecasts[]>;
   favoritesList$: Observable<Favorite[]>;
-  errorMessage$: Observable<string>;
-
   selectedLocation$: Observable<Autocomplete>;
+  errorMessage$: Observable<string>;
 
   constructor(private store: Store<State>, private router: Router, private weatherService: WeatherService) {}
 
@@ -40,6 +39,8 @@ export class WeatherShellComponent implements OnInit {
     this.currentConditions$ = this.store.select(getCurrentConditions);
 
     this.favoritesList$ = this.store.select(getCurrentList);
+
+    this.locationSelected();
   }
 
   checkChangedAutocompleteList(term: string): void {
@@ -49,9 +50,10 @@ export class WeatherShellComponent implements OnInit {
   }
 
   locationSelected(location?: Autocomplete): void {
-    this.store.dispatch(WeatherActions.setCurrentLocation({ currentLocationKey: location.Key }));
-    this.store.dispatch(WeatherActions.loadCurrentConditions({ locationKey: location.Key }));
-    this.store.dispatch(WeatherActions.loadFiveDaysForecasts({ locationKey: location.Key }));
+    const defaultLocationKey = location ? location.Key : '215854';
+    this.store.dispatch(WeatherActions.setCurrentLocation({ currentLocationKey: defaultLocationKey }));
+    this.store.dispatch(WeatherActions.loadCurrentConditions({ locationKey: defaultLocationKey }));
+    this.store.dispatch(WeatherActions.loadFiveDaysForecasts({ locationKey: defaultLocationKey }));
   }
 
   filterAutocompletedList(selectedLocationKey: string): void {

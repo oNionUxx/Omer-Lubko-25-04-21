@@ -1,155 +1,331 @@
-.grid-container {
-  display: grid;
-  grid-template-rows: 1fr 1fr 2fr;
-  height: 100%;
-  overflow: hidden;
-}
-
-.grid-container .grid-item-1 {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-}
-
-.grid-container .grid-item-1 .nested-item-1-a {
-  display: flex;
-  justify-content: flex-start;
-  padding: 10px;
-}
-
-.grid-container .grid-item-1 .nested-item-1-a .times-icon {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: fit-content;
-  border: 1px solid #ccc;
-  border-radius: 2px;
-}
-
-.grid-container .grid-item-1 .nested-item-1-a .data {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 10px;
-}
-
-.grid-container .grid-item-1 .nested-item-1-a .data > span {
-  letter-spacing: 2px;
-  font-size: 16px;
-  font-weight: bold;
-}
-
-.grid-container .grid-item-1 .nested-item-1-a .data .unit {
-  color: #a9a9a9;
-  font-weight: normal;
-  text-decoration: none;
-  cursor: pointer;
-}
-
-.grid-container .grid-item-1 .nested-item-1-a .data .unit.active {
-  font-weight: bold;
-}
-
-.grid-container .grid-item-1 .nested-item-1-b {
-  display: flex;
-  justify-content: flex-end;
-  padding: 10px;
-}
-
-.grid-container .grid-item-1 .nested-item-1-b .btn.btn-outline-dark {
-  width: fit-content;
-  height: fit-content;
-  cursor: pointer;
-}
-
-.grid-container .grid-item-1 .nested-item-1-b .heart-icon {
-  display: inline-block;
-  width: fit-content;
-  height: fit-content;
-  padding: 5px 10px;
-}
-
-.grid-container .grid-item-2 {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.grid-container .grid-item-3 {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-}
-
-.grid-container .grid-item-3 .card {
-  justify-content: center;
-  align-items: center;
-  border: 0px;
-  border-radius: 0px;
-}
-
-.grid-container .grid-item-3 .card .card-body {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.grid-container .grid-item-3 .card .card-body .day {
-  color: #a9a9a9;
-  font-weight: bold;
-  font-size: 26px;
-  padding: 5px;
-}
-
-.grid-container .grid-item-3 .card .card-body .image-icon {
-  display: inline-block;
-  width: 150px;
-  height: 100px;
-}
-
-.grid-container .grid-item-3 .card .card-body .temperature {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+:host {
   width: 100%;
 }
 
-.grid-container .grid-item-3 .card .card-body .temperature .min {
-  color: #a9a9a9;
-  font-size: 14px;
+.wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
-.grid-container .grid-item-3 .card .card-body .temperature .max {
-  color: #a9a9a9;
+.wrapper .data {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  width: 100%;
+  height: 60%;
+  z-index: 1;
+  margin-bottom: 20px;
+  border-radius: 20px;
+  background: linear-gradient(to right bottom, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.1));
+  box-shadow: inset 0 0 2000px rgba(255, 255, 255, 0.2);
+}
+
+.wrapper .data::after {
+  background: linear-gradient(to right bottom, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.1));
+  position: absolute;
+  content: '';
+  left: 50%;
+  top: 50%;
+  height: 100%;
+  width: 100%;
+  transform: translate(-50%, -50%);
+  border-radius: 100% 20px 20px 20px;
+  z-index: -1;
+}
+
+.wrapper .data .city,
+.wrapper .data .day,
+.wrapper .data .date,
+.wrapper .data .time {
+  color: #ffffff;
+  text-align: start;
+  padding: 0px 1.25rem;
+}
+
+.wrapper .data .city {
+  font-size: 65px;
   font-weight: bold;
-  font-size: 14px;
+  letter-spacing: 1px;
 }
 
-@media screen and (max-width: 600px) {
-  .grid-container .grid-item-1 .nested-item-1-a .data > span {
-    letter-spacing: 1px;
-    font-size: 12px;
+.wrapper .data .day,
+.wrapper .data .date {
+  font-size: 35px;
+}
+
+.wrapper .data .day,
+.wrapper .data .date {
+  font-size: 35px;
+}
+
+.wrapper .data .time {
+  display: flex;
+  align-items: center;
+  font-size: 20px;
+  margin-top: auto;
+  padding: 1.25rem;
+}
+
+.wrapper .data .time .clock-icon {
+  padding-right: 10px;
+}
+
+.wrapper .data .list-group:nth-of-type(2) {
+  justify-content: center;
+  align-items: center;
+}
+
+.wrapper .data .image .image-icon {
+  height: 130px;
+  filter: drop-shadow(5px 5px 5px #222);
+  padding: 0px 1.25rem;
+}
+
+.wrapper .data .text {
+  font-size: 40px;
+  letter-spacing: 3px;
+  color: #ffffff;
+  padding: 0px 1.25rem;
+}
+
+.wrapper .data .list-group:nth-of-type(3) {
+  justify-content: space-between;
+}
+
+.wrapper .data .list-group:nth-of-type(3) .list-group-item:first-of-type {
+  display: flex;
+  align-items: center;
+}
+
+.wrapper .data .btn.btn-dark {
+  width: 95%;
+  border-width: 2px;
+}
+
+.wrapper .data .btn.btn-dark:hover {
+  border-color: #fff;
+  border-style: solid;
+}
+
+.wrapper .data .heart-icon {
+  flex-grow: 1;
+  padding: 0 10px;
+  color: #ff0000;
+}
+
+.wrapper .data .temperature {
+  font-size: 125px;
+  font-weight: bold;
+  color: #ffffff;
+}
+
+.wrapper .data .units {
+  display: flex;
+  justify-content: flex-end;
+  color: #ffffff;
+}
+
+.wrapper .data .units .unit:first-of-type {
+  border-right: 1px solid #fff;
+}
+
+.wrapper .data .units .unit {
+  display: flex;
+  align-items: center;
+  padding: 0 15px;
+  font-size: 20px;
+  text-decoration: none;
+  color: #333;
+  font-weight: normal;
+  cursor: pointer;
+  transition: 1s;
+}
+
+.wrapper .data .units .unit.active {
+  color: #fff;
+  font-weight: bold;
+}
+
+.wrapper .data .units .unit:hover {
+  transform: scale(1.2);
+}
+
+.wrapper .forecast {
+  position: relative;
+  flex-grow: 1;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  width: 100%;
+  margin-bottom: 20px;
+  border-radius: 20px;
+  background: linear-gradient(to right bottom, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.1));
+  box-shadow: inset 0 0 2000px rgba(255, 255, 255, 0.2);
+}
+
+.wrapper .forecast::after {
+  background: linear-gradient(to right bottom, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.1));
+  position: absolute;
+  content: '';
+  left: 50%;
+  top: 50%;
+  height: 100%;
+  width: 100%;
+  transform: translate(-50%, -50%);
+  border-radius: 100% 20px 20px 20px;
+}
+
+.wrapper .forecast .list-group {
+  justify-content: space-around;
+}
+
+.wrapper .forecast .day {
+  text-align: center;
+  font-size: 40px;
+  font-weight: bold;
+  color: #faebd7;
+  letter-spacing: 1px;
+}
+
+.wrapper .forecast .image {
+  padding: 0px 1.25rem;
+  text-align: center;
+}
+
+.wrapper .forecast .image .image-icon {
+  height: 75px;
+  filter: drop-shadow(5px 5px 5px #222);
+}
+
+.wrapper .forecast .temperature {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #faebd7;
+}
+
+.wrapper .forecast .temperature .max,
+.wrapper .forecast .temperature .min {
+  padding-right: 0.5rem;
+  padding-left: 0.5rem;
+  font-size: 20px;
+}
+
+.wrapper .forecast .temperature .max {
+  font-weight: bold;
+}
+
+@media screen and (max-width: 1200px) {
+  .wrapper .data {
+    grid-template-columns: 2fr 1fr;
+    height: 50%;
   }
 
-  .grid-container .grid-item-1 .nested-item-1-b .heart-icon {
-    padding: 5px;
+  .wrapper .data .list-group:first-of-type {
+    height: 60%;
+    margin-top: auto;
   }
 
-  .grid-container .grid-item-3 .card .card-body {
-    justify-content: space-around;
-    padding: 5px;
+  .wrapper .data .city {
+    font-size: 45px;
   }
 
-  .grid-container .grid-item-3 .card .card-body .day {
-    font-size: 14px;
+  .wrapper .data .day,
+  .wrapper .data .date {
+    font-size: 25px;
   }
 
-  .grid-container .grid-item-3 .card .card-body .image-icon {
-    width: 70px;
+  .wrapper .data .time {
+    font-size: 18px;
+  }
+
+  .wrapper .data .temperature {
+    position: absolute;
+    top: 0;
+    left: 0;
+    font-size: 65px;
+  }
+
+  .wrapper .data .list-group:nth-of-type(2) {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .wrapper .forecast .list-group .list-group-item {
+    padding-right: 0.25rem;
+    padding-left: 0.25rem;
+  }
+
+  .wrapper .forecast .day {
+    font-size: 30px;
+  }
+
+  .wrapper .forecast .image .image-icon {
     height: 50px;
   }
 
-  .grid-container .grid-item-3 .card .card-body .temperature .min,
-  .grid-container .grid-item-3 .card .card-body .temperature .max {
-    font-size: 12px;
+  .wrapper .data .text {
+    position: absolute;
+    transform: translateX(70%);
+    font-size: 25px;
+  }
+
+  .wrapper .forecast .temperature .min,
+  .wrapper .forecast .temperature .max {
+    font-size: 18px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .wrapper .data {
+    width: 90%;
+    margin: 0 auto;
+  }
+
+  .wrapper .forecast {
+    background: none;
+    box-shadow: none;
+  }
+
+  .wrapper .data .city {
+    font-size: 25px;
+  }
+
+  .wrapper .data .date,
+  .wrapper .data .day {
+    font-size: 18px;
+  }
+
+  .wrapper .data .time {
+    font-size: 14px;
+    padding: 12px 0px 12px 12px;
+  }
+
+  .wrapper .data .text {
+    font-size: 18px;
+  }
+
+  .wrapper .data .list-group:last-of-type .list-group-item:first-of-type {
+    width: 235px;
+  }
+
+  .wrapper .data .btn.btn-dark {
+    font-size: 14px;
+  }
+
+  .wrapper .forecast::after {
+    background: none;
+  }
+
+  .wrapper .forecast .day {
+    font-size: 18px;
+  }
+
+  .wrapper .forecast .temperature .min,
+  .wrapper .forecast .temperature .max {
+    font-size: 14px;
   }
 }

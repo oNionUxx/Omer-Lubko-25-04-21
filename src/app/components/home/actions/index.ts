@@ -14,6 +14,7 @@ import {
   filteredAutocompletedList,
   setCurrentLocation,
   addLocation,
+  toggleAppTheme,
 } from './weather-page.actions';
 
 export {
@@ -29,4 +30,5 @@ export {
   loadFiveDaysForecastsOnSuccess,
   loadFiveDaysForecastsOnFailure,
   addLocation,
+  toggleAppTheme,
 };

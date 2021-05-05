@@ -8,6 +8,7 @@ export interface WeatherState {
   fiveDaysForecasts: FiveDaysForecasts[];
   favoritesList: Favorite[];
   currentLocationKey: string | null;
+  toggleAppTheme: boolean;
   error: string;
 }
 
@@ -34,6 +35,7 @@ const initialState: WeatherState = {
   fiveDaysForecasts: [],
   favoritesList: [],
   currentLocationKey: '215854',
+  toggleAppTheme: false,
   error: '',
 };
 
@@ -45,6 +47,15 @@ export const weatherReducer = createReducer<WeatherState>(
       return {
         ...state,
         currentLocationKey: action.currentLocationKey,
+      };
+    }
+  ),
+  on(
+    WeatherActions.toggleAppTheme,
+    (state): WeatherState => {
+      return {
+        ...state,
+        toggleAppTheme: !state.toggleAppTheme,
       };
     }
   ),
@@ -123,7 +134,15 @@ export const weatherReducer = createReducer<WeatherState>(
     (state, action): WeatherState => {
       let updateList = Object.assign([], state.favoritesList);
 
-      updateList.length < 5 ? updateList.unshift(action.location) : updateList.pop();
+      const element = (item) => item.Key === action.location.Key;
+
+      const isFound = state.favoritesList.some(element);
+
+      if (!isFound) {
+        updateList.push(action.location);
+      } else {
+        updateList = updateList.filter((item) => item.Key !== action.location.Key);
+      }
 
       return {
         ...state,

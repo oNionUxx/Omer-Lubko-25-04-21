@@ -3,19 +3,19 @@
   display: flex;
   flex-direction: column;
   width: 100%;
-  height: 100%;
-  padding: 20px 10px;
+  min-height: calc(100vh - 50px);
+  padding: 5px 0px;
 }
 
 .wrapper .search {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 15%;
+  margin-top: 10px;
+  height: 10%;
 }
 
 .wrapper .info {
+  position: relative;
   flex-grow: 1;
-  border: 1px solid #ccc;
-  border-radius: 3px;
+  display: flex;
+  margin-top: 20px;
 }

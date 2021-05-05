@@ -12,6 +12,7 @@ export class WeatherSearchComponent implements OnInit {
   @Input() autocompletedList: Autocomplete[];
   @Input() selectedLocation: Autocomplete;
   @Input() errorMessage: string;
+  @Input() showInfoSection: boolean = true;
 
   @Output() listToBeFiltered = new EventEmitter<string>();
   @Output() locationWasSelected = new EventEmitter<Autocomplete>();
@@ -35,11 +36,11 @@ export class WeatherSearchComponent implements OnInit {
     let pattern = /^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$/;
     let q = event.target.value;
 
-    if (q.match(pattern) && q !== '') {
+    if (q.match(pattern)) {
       this.changedAutocompletedList.emit(q);
+    } else if (q === '') {
+      this.toggleDropdownList();
     }
-
-    this;
   }
 
   selectItem(location: Autocomplete): void {

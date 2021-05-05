@@ -10,6 +10,8 @@ export interface State extends AppState {
 
 const getWeatherFeatureState = createFeatureSelector<WeatherState>('weather');
 
+export const getAppThemeState = createSelector(getWeatherFeatureState, (state) => state.toggleAppTheme);
+
 export const getAutoCompletedList = createSelector(getWeatherFeatureState, (state) => state.autocompletedList);
 
 export const getCurrentLocationKey = createSelector(getWeatherFeatureState, (state) => state.currentLocationKey);
