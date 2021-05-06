@@ -6,6 +6,7 @@
   position: relative;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   height: 100%;
 }
 
@@ -269,7 +270,7 @@
 
   .wrapper .data .text {
     position: absolute;
-    transform: translateX(70%);
+    transform: translateX(100%);
     font-size: 25px;
   }
 
@@ -279,15 +280,26 @@
   }
 }
 
+@media screen and (max-width: 768px) {
+  .wrapper .data .city {
+    font-size: 32px;
+  }
+
+  .wrapper .data .date,
+  .wrapper .data .day {
+    font-size: 20px;
+  }
+
+  .wrapper .data .text {
+    transform: translate(60%, 100%);
+  }
+}
+
 @media screen and (max-width: 600px) {
   .wrapper .data {
     width: 90%;
+    height: 60%;
     margin: 0 auto;
-  }
-
-  .wrapper .forecast {
-    background: none;
-    box-shadow: none;
   }
 
   .wrapper .data .city {
@@ -316,6 +328,11 @@
     font-size: 14px;
   }
 
+  .wrapper .forecast {
+    background: none;
+    box-shadow: none;
+  }
+
   .wrapper .forecast::after {
     background: none;
   }
@@ -327,5 +344,16 @@
   .wrapper .forecast .temperature .min,
   .wrapper .forecast .temperature .max {
     font-size: 14px;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .wrapper .data .image {
+    padding: 0.25rem 2rem 0 0.25rem;
+  }
+
+  .wrapper .data .text {
+    font-size: 16px;
+    transform: translateX(70%);
   }
 }

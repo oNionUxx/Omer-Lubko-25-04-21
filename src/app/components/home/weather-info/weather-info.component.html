@@ -2,7 +2,7 @@
     <div class="data">
         <ul class="list-group">
             <li class="list-group-item city">
-                {{ this.autocompletedList[0]?.LocalizedName }}
+                {{ showLocalizedCity }}
             </li>
 
             <li class="list-group-item day">
@@ -21,9 +21,13 @@
 
         <ul class="list-group">
             <li class="list-group-item image">
-                <img class="image-icon"
+                <img class="image-icon" *ngIf="currentConditions[0]?.IsDayTime"
                     src="../../../../../../assets/icons/{{ fiveDaysForecasts['DailyForecasts'][0]?.Day?.Icon > 8 ? fiveDaysForecasts['DailyForecasts'][0]?.Day?.Icon : '0' + fiveDaysForecasts['DailyForecasts'][0]?.Day?.Icon }}-s.png"
                     alt="{{ fiveDaysForecasts['DailyForecasts'][0]?.Day?.Icon }}">
+
+                <img class="image-icon" *ngIf="!currentConditions[0]?.IsDayTime"
+                    src="../../../../../../assets/icons/{{ fiveDaysForecasts['DailyForecasts'][0]?.Night?.Icon > 8 ? fiveDaysForecasts['DailyForecasts'][0]?.Night?.Icon : '0' + fiveDaysForecasts['DailyForecasts'][0]?.Night?.Icon }}-s.png"
+                    alt="{{ fiveDaysForecasts['DailyForecasts'][0]?.Night?.Icon }}">
             </li>
 
             <li class="list-group-item text">
@@ -34,7 +38,8 @@
         <ul class="list-group">
             <li class="list-group-item">
                 <i class="fa fa-heart fa-2x heart-icon" aria-hidden="true"></i>
-                <button type="button" class="btn btn-dark" (click)="addToFavorites()">Add To Favorites</button>
+                <button type="button" class="btn btn-dark" (click)="addToFavorites()">{{ found ? 'Remove from ' : 'Add
+                    to' }} favorites</button>
             </li>
 
             <li class="list-group-item temperature">
@@ -58,8 +63,12 @@
             </li>
 
             <li class="list-group-item image">
-                <img class="image-icon"
+                <img class="image-icon" *ngIf="currentConditions[0]?.IsDayTime"
                     src="../../../../../../assets/icons/{{item?.Day?.Icon > 8 ? item?.Day?.Icon : '0' + item?.Day?.Icon }}-s.png"
+                    alt="{{item?.Day?.Icon}}">
+
+                <img class="image-icon" *ngIf="!currentConditions[0]?.IsDayTime"
+                    src="../../../../../../assets/icons/{{item?.Night?.Icon > 8 ? item?.Night?.Icon : '0' + item?.Night?.Icon }}-s.png"
                     alt="{{item?.Day?.Icon}}">
             </li>
 

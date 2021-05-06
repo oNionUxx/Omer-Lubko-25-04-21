@@ -4,18 +4,23 @@
   flex-direction: column;
   width: 100%;
   min-height: calc(100vh - 50px);
-  padding: 5px 0px;
 }
 
 .wrapper .search {
+  position: relative;
   display: flex;
-  margin-top: 10px;
-  height: 10%;
+  margin: 1rem;
 }
 
 .wrapper .info {
   position: relative;
-  flex-grow: 1;
   display: flex;
-  margin-top: 20px;
+  flex-grow: 1;
+  margin: auto;
+}
+
+@media screen and (max-width: 600px) {
+  .wrapper {
+    min-height: 700px;
+  }
 }

@@ -16,8 +16,11 @@ export class WeatherResultsComponent implements OnInit {
   @Input() favoritesList: Favorite[];
   @Output() addSelectedLocation = new EventEmitter<Favorite>();
 
-  displayCurrentUnit = -1;
+  found: any;
+  helper = null;
   isShowMetric = true;
+  displayCurrentUnit = -1;
+  showLocalizedCity: string;
 
   constructor(private fm: FlashMessagesService) {}
 
@@ -25,6 +28,13 @@ export class WeatherResultsComponent implements OnInit {
 
   ngOnChanges(): void {
     this.displayCurrentUnit = this.currentConditions[0]?.Temperature?.Metric?.Value;
+
+    if (this.helper !== this.displayCurrentUnit) {
+      this.showLocalizedCity = this.autocompletedList[0]?.LocalizedName;
+    }
+
+    this.helper = this.displayCurrentUnit;
+    this.found = this.favoritesList.find((value) => value.Key === this.autocompletedList[0].Key);
   }
 
   addToFavorites(): void {
@@ -34,7 +44,6 @@ export class WeatherResultsComponent implements OnInit {
       WeatherText: this.currentConditions[0].WeatherText,
       Temperature: this.currentConditions[0].Temperature,
     };
-
     this.addSelectedLocation.emit(location);
   }
 

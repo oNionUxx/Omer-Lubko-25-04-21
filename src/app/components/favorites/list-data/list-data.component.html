@@ -1,16 +1,11 @@
-<div class="wrapper">
+<div class="wrapper" *ngIf="favoritesList">
     <div class="inner-wrapper">
-        <div class="card" *ngFor="let item of favoritesList" (click)="selectItem(item)">
-            <div class="card-header">
-                <h2>{{ item?.LocalizedName}}</h2>
-            </div>
+        <ul class="list-group" *ngFor="let item of favoritesList">
+            <li class="list-group-item city">{{ item?.LocalizedName }}</li>
+            <li class="list-group-item text">{{ item.WeatherText }}</li>
+            <li class="list-group-item temperature">{{ item.Temperature.Metric.Value }}&deg;</li>
+            <li class="list-group-item undo" (click)="selectItem(item)"><i class="fa fa-undo fa-2x"></i></li>
+        </ul>
 
-            <div class="card-body">
-                <ul class="list-group">
-                    <li class="list-group-item">{{ item.WeatherText }}</li>
-                    <li class="list-group-item">{{ item.Temperature.Metric.Value }}&deg;</li>
-                </ul>
-            </div>
-        </div>
     </div>
 </div>

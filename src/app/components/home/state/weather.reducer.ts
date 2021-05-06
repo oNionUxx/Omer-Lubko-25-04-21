@@ -134,14 +134,15 @@ export const weatherReducer = createReducer<WeatherState>(
     (state, action): WeatherState => {
       let updateList = Object.assign([], state.favoritesList);
 
-      const element = (item) => item.Key === action.location.Key;
+      const found = state.favoritesList.find((item) => item.Key === action.location.Key);
 
-      const isFound = state.favoritesList.some(element);
-
-      if (!isFound) {
+      if (!found) {
         updateList.push(action.location);
       } else {
-        updateList = updateList.filter((item) => item.Key !== action.location.Key);
+        const index = state.favoritesList.indexOf(found);
+        if (index > -1) {
+          updateList.splice(index, 1);
+        }
       }
 
       return {

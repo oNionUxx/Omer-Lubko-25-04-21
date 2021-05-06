@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy, ViewChild, ElementRef } from '@angular/core';
 
 import { Autocomplete } from '../weather';
 
@@ -18,35 +18,44 @@ export class WeatherSearchComponent implements OnInit {
   @Output() locationWasSelected = new EventEmitter<Autocomplete>();
   @Output() changedAutocompletedList = new EventEmitter<Autocomplete[]>();
 
+  @ViewChild('valueRef') valueRef: ElementRef;
+
   ngOnInit(): void {}
 
+  str = '';
+  value = 'Tel Aviv';
   showDropdownList = false;
-  data: string;
 
   ngOnInt(): void {}
 
-  ngOnChanges(): void {
-    if (this.selectedLocation) {
-      this.data = this.selectedLocation.LocalizedName;
-    }
-  }
+  ngOnChanges(): void {}
 
   searchItem(event): void {
     // check for matched pattern
-    let pattern = /^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$/;
-    let q = event.target.value;
 
-    if (q.match(pattern)) {
-      this.changedAutocompletedList.emit(q);
-    } else if (q === '') {
-      this.toggleDropdownList();
+    let pattern = /^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$/;
+    let q = event.target.value.trim();
+    this.showDropdownList = true;
+
+    if (q.includes('No results found'.trim())) {
+      this.valueRef.nativeElement.value = '';
     }
+
+    if (q.match(pattern) && q !== '') {
+      this.changedAutocompletedList.emit(q);
+    }
+
+    if (q === '') {
+      this.showDropdownList = false;
+    }
+
+    this.valueRef.nativeElement.style.color = '#333';
   }
 
   selectItem(location: Autocomplete): void {
-    this.locationWasSelected.emit(location);
     this.clearItem(location);
     this.toggleDropdownList();
+    this.locationWasSelected.emit(location);
   }
 
   clearItem(location: Autocomplete): void {
