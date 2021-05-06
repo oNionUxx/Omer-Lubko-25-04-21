@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy, ViewChild, ElementRef } from '@angular/core';
-
+import { FlashMessagesService } from 'angular2-flash-messages';
 import { Autocomplete } from '../weather';
 
 @Component({
@@ -20,6 +20,7 @@ export class WeatherSearchComponent implements OnInit {
 
   @ViewChild('valueRef') valueRef: ElementRef;
 
+  constructor(private fm: FlashMessagesService) {}
   ngOnInit(): void {}
 
   str = '';
@@ -29,8 +30,13 @@ export class WeatherSearchComponent implements OnInit {
   ngOnInt(): void {}
 
   ngOnChanges(): void {
-    console.log(this.autocompletedList);
-    console.log(this.value);
+    if (this.selectedLocation) {
+      this.value = this.selectedLocation?.LocalizedName;
+    }
+
+    // if (this.autocompletedList.length < 1 && this.valueRef.nativeElement.value !== '') {
+    //   this.valueRef.nativeElement.value = 'No results found..';
+    // }
   }
 
   searchItem(event): void {
@@ -39,10 +45,6 @@ export class WeatherSearchComponent implements OnInit {
     let pattern = /^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$/;
     let q = event.target.value.trim();
     this.showDropdownList = true;
-
-    if (q.includes('No results found'.trim())) {
-      this.valueRef.nativeElement.value = '';
-    }
 
     if (q.match(pattern) && q !== '') {
       this.changedAutocompletedList.emit(q);
@@ -67,5 +69,12 @@ export class WeatherSearchComponent implements OnInit {
 
   toggleDropdownList(): void {
     this.showDropdownList = !this.showDropdownList;
+  }
+
+  displayUserMessage(errorMessage?: string): void {
+    this.fm.show(errorMessage, {
+      cssClass: 'alert-danger',
+      timeout: 4000,
+    });
   }
 }

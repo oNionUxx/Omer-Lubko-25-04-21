@@ -7,9 +7,10 @@
         </pm-weather-search>
     </div>
     <div class="info">
-        <pm-weather-info [autocompletedList]="autocompletedList$ | async" [selectedLocation]="selectedLocation$ | async"
-            [currentConditions]="currentConditions$ | async" [fiveDaysForecasts]="fiveDaysForecasts$ | async"
-            [favoritesList]="favoritesList$ | async" (addSelectedLocation)="addLocation($any($event))">
+        <pm-weather-info [errorMessage]="errorMessage$ | async" [autocompletedList]="autocompletedList$ | async"
+            [selectedLocation]="selectedLocation$ | async" [currentConditions]="currentConditions$ | async"
+            [fiveDaysForecasts]="fiveDaysForecasts$ | async" [favoritesList]="favoritesList$ | async"
+            (addSelectedLocation)="addLocation($any($event))">
         </pm-weather-info>
     </div>
 </div>

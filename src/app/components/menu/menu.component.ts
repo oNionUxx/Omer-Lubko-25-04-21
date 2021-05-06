@@ -23,6 +23,7 @@ export class MenuComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    console.log(this.store.select(getAppThemeState));
     this.subscription = this.store.select(getAppThemeState).subscribe((value) => {
       this.toggleTheme = value;
 

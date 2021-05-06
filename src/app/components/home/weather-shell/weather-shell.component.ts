@@ -9,7 +9,15 @@ import { Autocomplete, CurrentConditions, FiveDaysForecasts, Favorite } from '..
 /* NgRx */
 import { Store } from '@ngrx/store';
 import * as WeatherActions from '../actions';
-import { State, getAutoCompletedList, getCurrentLocation, getCurrentConditions, getFiveDaysForecasts, getCurrentList } from '../state';
+import {
+  State,
+  getAutoCompletedList,
+  getCurrentLocation,
+  getCurrentConditions,
+  getFiveDaysForecasts,
+  getCurrentList,
+  getError,
+} from '../state';
 import { WeatherService } from '../weather.service';
 
 @Component({
@@ -42,9 +50,7 @@ export class WeatherShellComponent implements OnInit, OnDestroy {
 
     this.favoritesList$ = this.store.select(getCurrentList);
 
-    this.subscription = this.weatherService.getLocationDetails().subscribe((data: any) => {
-      this.checkChangedAutocompleteList(data.city);
-    });
+    this.errorMessage$ = this.store.select(getError);
 
     this.locationSelected();
   }

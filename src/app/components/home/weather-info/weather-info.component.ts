@@ -9,11 +9,13 @@ import { FlashMessagesService } from 'angular2-flash-messages';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class WeatherResultsComponent implements OnInit {
+  @Input() errorMessage: string;
   @Input() selectedLocation: Autocomplete;
+  @Input() favoritesList: Favorite[];
   @Input() autocompletedList: Autocomplete[];
   @Input() currentConditions: CurrentConditions[];
   @Input() fiveDaysForecasts: FiveDaysForecasts[];
-  @Input() favoritesList: Favorite[];
+
   @Output() addSelectedLocation = new EventEmitter<Favorite>();
 
   found: any;

@@ -6,7 +6,7 @@
 .wrapper .inner-wrapper {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  gap: 10px;
+  gap: 20px;
   min-height: 350px;
 }
 
@@ -32,7 +32,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  color: #faebd7;
+  color: #333;
   font-size: 40px;
   font-weight: bold;
   letter-spacing: 1px;
@@ -41,8 +41,8 @@
 .wrapper .inner-wrapper .text {
   display: flex;
   justify-content: center;
-  font-size: 35px;
-  color: #ffffff;
+  font-size: 25px;
+  color: #333;
 }
 
 .wrapper .inner-wrapper .temperature {
@@ -50,8 +50,8 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, 50%);
-  font-size: 30px;
-  color: #ffffff;
+  font-size: 20px;
+  color: #333;
 }
 
 .wrapper .inner-wrapper .undo {

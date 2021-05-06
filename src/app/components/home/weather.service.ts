@@ -91,7 +91,6 @@ export class WeatherService {
       // The response body may contain clues as to what went wrong,
       errorMessage = `Backend returned code ${err.status}: ${err.body.error}`;
     }
-    console.error(err);
-    return throwError(errorMessage);
+    return throwError(err);
   }
 }
