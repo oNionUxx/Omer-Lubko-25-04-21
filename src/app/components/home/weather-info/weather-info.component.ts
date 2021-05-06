@@ -37,6 +37,8 @@ export class WeatherResultsComponent implements OnInit {
 
     this.helper = this.displayCurrentUnit;
     this.found = this.favoritesList.find((value) => value.Key === this.autocompletedList[0].Key);
+
+    console.log(this.showLocalizedCity);
   }
 
   addToFavorites(): void {

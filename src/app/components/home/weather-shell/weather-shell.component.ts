@@ -1,8 +1,8 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 import { Router } from '@angular/router';
 
-import { Observable, Subscription } from 'rxjs';
+import { Observable } from 'rxjs';
 
 import { Autocomplete, CurrentConditions, FiveDaysForecasts, Favorite } from '../weather';
 
@@ -25,15 +25,13 @@ import { WeatherService } from '../weather.service';
   templateUrl: './weather-shell.component.html',
   styleUrls: ['./weather-shell.component.css'],
 })
-export class WeatherShellComponent implements OnInit, OnDestroy {
+export class WeatherShellComponent implements OnInit {
   autocompletedList$: Observable<Autocomplete[]>;
   currentConditions$: Observable<CurrentConditions[]>;
   fiveDaysForecasts$: Observable<FiveDaysForecasts[]>;
   favoritesList$: Observable<Favorite[]>;
   selectedLocation$: Observable<Autocomplete>;
   errorMessage$: Observable<string>;
-
-  subscription: Subscription;
 
   constructor(private store: Store<State>, private router: Router, private weatherService: WeatherService) {}
 
@@ -55,10 +53,6 @@ export class WeatherShellComponent implements OnInit, OnDestroy {
     this.locationSelected();
   }
 
-  ngOnDestroy(): void {
-    this.subscription.unsubscribe();
-  }
-
   checkChangedAutocompleteList(term: string): void {
     if (term) {
       this.store.dispatch(WeatherActions.loadAutocompletedList({ term }));
@@ -66,6 +60,7 @@ export class WeatherShellComponent implements OnInit, OnDestroy {
   }
 
   locationSelected(location?: Autocomplete): void {
+    console.log(location);
     const defaultLocationKey = location ? location.Key : '215854';
     this.store.dispatch(WeatherActions.setCurrentLocation({ currentLocationKey: defaultLocationKey }));
     this.store.dispatch(WeatherActions.loadCurrentConditions({ locationKey: defaultLocationKey }));

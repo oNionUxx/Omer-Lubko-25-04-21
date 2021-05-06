@@ -33,10 +33,6 @@ export class WeatherSearchComponent implements OnInit {
     if (this.selectedLocation) {
       this.value = this.selectedLocation?.LocalizedName;
     }
-
-    // if (this.autocompletedList.length < 1 && this.valueRef.nativeElement.value !== '') {
-    //   this.valueRef.nativeElement.value = 'No results found..';
-    // }
   }
 
   searchItem(event): void {

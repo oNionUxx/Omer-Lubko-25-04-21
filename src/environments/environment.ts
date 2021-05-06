@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   baseUrl: 'http://dataservice.accuweather.com',
-  apiKey: 'DSB6kIbavIPPVOsfiLdt8fk2WYrth0rI',
+  apiKey: 'eeB1oiOYM3GQN77SQpfC2JLcHmPBmHOa',
   toggleAppTheme: true,
 };
 /*
