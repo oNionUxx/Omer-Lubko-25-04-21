@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 
 import { Router } from '@angular/router';
 
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 
 import { Autocomplete, CurrentConditions, FiveDaysForecasts, Favorite } from '../weather';
 
@@ -17,13 +17,15 @@ import { WeatherService } from '../weather.service';
   templateUrl: './weather-shell.component.html',
   styleUrls: ['./weather-shell.component.css'],
 })
-export class WeatherShellComponent implements OnInit {
+export class WeatherShellComponent implements OnInit, OnDestroy {
   autocompletedList$: Observable<Autocomplete[]>;
   currentConditions$: Observable<CurrentConditions[]>;
   fiveDaysForecasts$: Observable<FiveDaysForecasts[]>;
   favoritesList$: Observable<Favorite[]>;
   selectedLocation$: Observable<Autocomplete>;
   errorMessage$: Observable<string>;
+
+  subscription: Subscription;
 
   constructor(private store: Store<State>, private router: Router, private weatherService: WeatherService) {}
 
@@ -40,7 +42,15 @@ export class WeatherShellComponent implements OnInit {
 
     this.favoritesList$ = this.store.select(getCurrentList);
 
+    this.subscription = this.weatherService.getLocationDetails().subscribe((data: any) => {
+      this.checkChangedAutocompleteList(data.city);
+    });
+
     this.locationSelected();
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 
   checkChangedAutocompleteList(term: string): void {

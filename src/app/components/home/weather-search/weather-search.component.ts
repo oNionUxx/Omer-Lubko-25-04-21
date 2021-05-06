@@ -28,7 +28,10 @@ export class WeatherSearchComponent implements OnInit {
 
   ngOnInt(): void {}
 
-  ngOnChanges(): void {}
+  ngOnChanges(): void {
+    console.log(this.autocompletedList);
+    console.log(this.value);
+  }
 
   searchItem(event): void {
     // check for matched pattern

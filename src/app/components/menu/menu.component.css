@@ -2,6 +2,7 @@
   max-height: 50px;
   background-color: #424242;
   border-bottom: 2px solid #fff;
+  padding: 0px;
 }
 
 .navbar .wrapper .navbar-nav {
@@ -51,5 +52,5 @@
 }
 
 .navbar .wrapper .navbar-nav .nav-item > .nav-link {
-  padding: 0 20px;
+  padding: 0 10px;
 }

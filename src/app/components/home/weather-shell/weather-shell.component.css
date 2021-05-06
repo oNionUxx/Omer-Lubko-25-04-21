@@ -16,11 +16,7 @@
   position: relative;
   display: flex;
   flex-grow: 1;
-  margin: auto;
 }
 
 @media screen and (max-width: 600px) {
-  .wrapper {
-    min-height: 700px;
-  }
 }

@@ -13,44 +13,44 @@ import { environment } from '../../../environments/environment';
 export class WeatherService {
   constructor(private http: HttpClient) {}
 
-  // geolocationObservable(options): Observable<Object> {
-  //   return new Observable((observer) => {
-  //     // This function is called when someone subscribes.
+  geolocationObservable(options): Observable<Object> {
+    return new Observable((observer) => {
+      // This function is called when someone subscribes.
 
-  //     const id = navigator.geolocation.watchPosition(
-  //       (position) => {
-  //         observer.next(position);
-  //       },
-  //       (error) => {
-  //         observer.error(error);
-  //       },
-  //       options
-  //     );
+      const id = navigator.geolocation.watchPosition(
+        (position) => {
+          observer.next(position);
+        },
+        (error) => {
+          observer.error(error);
+        },
+        options
+      );
 
-  //     // Our teardown function. Will be called if they unsubscribe
-  //     return () => {
-  //       navigator.geolocation.clearWatch(id);
-  //     };
-  //   });
-  // }
+      // Our teardown function. Will be called if they unsubscribe
+      return () => {
+        navigator.geolocation.clearWatch(id);
+      };
+    });
+  }
 
-  // getLocationDetails(): Observable<Location> {
-  //   return this.geolocationObservable({
-  //     enableHighAccuracy: true,
-  //     timeout: 5000,
-  //     maximumAge: 0,
-  //   }).pipe(
-  //     switchMap((position: any) => {
-  //       const latitude = position.coords.latitude;
-  //       const longitude = position.coords.longitude;
+  getLocationDetails(): Observable<Location> {
+    return this.geolocationObservable({
+      enableHighAccuracy: true,
+      timeout: 5000,
+      maximumAge: 0,
+    }).pipe(
+      switchMap((position: any) => {
+        const latitude = position.coords.latitude;
+        const longitude = position.coords.longitude;
 
-  //       return this.http.get<Location>(
-  //         `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=en`
-  //       );
-  //     }),
-  //     tap((data) => console.log('Location Data: ', JSON.stringify(data)))
-  //   );
-  // }
+        return this.http.get<Location>(
+          `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=en`
+        );
+      }),
+      tap((data) => console.log('Location Data: ', JSON.stringify(data)))
+    );
+  }
 
   getAutoCompleted(term: string): Observable<Autocomplete[]> {
     return this.http
