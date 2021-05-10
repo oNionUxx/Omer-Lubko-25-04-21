@@ -12,6 +12,7 @@ import { Autocomplete } from '../weather';
 })
 export class WeatherSearchComponent {
   keyword = 'LocalizedName';
+  displayCurrentLocation: string;
 
   @Input() autocompletedList: Autocomplete[];
   @Input() currentLocationKey: string;
@@ -22,6 +23,12 @@ export class WeatherSearchComponent {
   @Output() changedAutocompletedList = new EventEmitter<Autocomplete[]>();
 
   constructor(private fm: FlashMessagesService) {}
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.autocompletedList && changes.autocompletedList.currentValue[0] && !changes.autocompletedList.firstChange) {
+      this.displayCurrentLocation = changes.autocompletedList.currentValue[0].LocalizedName;
+    }
+  }
 
   onChangeSearch(value) {
     // fetch remote data from here
