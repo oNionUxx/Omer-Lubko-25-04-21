@@ -1,8 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-
 import { ShellComponent } from './components/shell/shell.component';
-import { ListShellComponent } from './components/favorites/list-shell/list-shell.component';
 
 const appRoutes: Routes = [
   {
@@ -11,7 +9,7 @@ const appRoutes: Routes = [
     children: [
       {
         path: 'home',
-        loadChildren: () => import('./components/home/home.module').then((h) => h.HomeModule),
+        loadChildren: () => import('./components/home/weather.module').then((h) => h.WeatherModule),
       },
 
       {

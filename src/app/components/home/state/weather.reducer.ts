@@ -34,7 +34,7 @@ const initialState: WeatherState = {
   currentConditions: [],
   fiveDaysForecasts: [],
   favoritesList: [],
-  currentLocationKey: '215854',
+  currentLocationKey: null,
   toggleAppTheme: false,
   error: '',
 };
@@ -42,11 +42,11 @@ const initialState: WeatherState = {
 export const weatherReducer = createReducer<WeatherState>(
   initialState,
   on(
-    WeatherActions.setCurrentLocation,
+    WeatherActions.setCurrentLocationKey,
     (state, action): WeatherState => {
       return {
         ...state,
-        currentLocationKey: action.currentLocationKey,
+        currentLocationKey: action.locationKey,
       };
     }
   ),
@@ -64,7 +64,7 @@ export const weatherReducer = createReducer<WeatherState>(
     (state, action): WeatherState => {
       return {
         ...state,
-        autocompletedList: state.autocompletedList.filter((l) => l.Key === action.currentLocationKey),
+        autocompletedList: state.autocompletedList.filter((l) => l.Key === action.locationKey),
         error: '',
       };
     }
@@ -76,6 +76,28 @@ export const weatherReducer = createReducer<WeatherState>(
         ...state,
         autocompletedList: action.autocompletedList,
         error: '',
+      };
+    }
+  ),
+  on(
+    WeatherActions.addLocation,
+    (state, action): WeatherState => {
+      let updateList = Object.assign([], state.favoritesList);
+
+      const found = state.favoritesList.find((item) => item.Key === action.location.Key);
+
+      if (!found) {
+        updateList.push(action.location);
+      } else {
+        const index = state.favoritesList.indexOf(found);
+        if (index > -1) {
+          updateList.splice(index, 1);
+        }
+      }
+
+      return {
+        ...state,
+        favoritesList: updateList,
       };
     }
   ),
@@ -126,28 +148,6 @@ export const weatherReducer = createReducer<WeatherState>(
         ...state,
         fiveDaysForecasts: null,
         error: action.err,
-      };
-    }
-  ),
-  on(
-    WeatherActions.addLocation,
-    (state, action): WeatherState => {
-      let updateList = Object.assign([], state.favoritesList);
-
-      const found = state.favoritesList.find((item) => item.Key === action.location.Key);
-
-      if (!found) {
-        updateList.push(action.location);
-      } else {
-        const index = state.favoritesList.indexOf(found);
-        if (index > -1) {
-          updateList.splice(index, 1);
-        }
-      }
-
-      return {
-        ...state,
-        favoritesList: updateList,
       };
     }
   )

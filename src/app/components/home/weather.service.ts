@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { combineLatest, Observable, throwError } from 'rxjs';
-import { catchError, tap, map, shareReplay, take, debounceTime, switchMap, takeUntil, skip } from 'rxjs/operators';
+import { Observable, throwError } from 'rxjs';
+import { catchError, tap, switchMap } from 'rxjs/operators';
 
-import { Autocomplete, CurrentConditions, Favorite, FiveDaysForecasts } from './weather';
+import { Autocomplete, CurrentConditions, FiveDaysForecasts } from './weather';
 
 import { environment } from '../../../environments/environment';
 
@@ -11,6 +11,8 @@ import { environment } from '../../../environments/environment';
   providedIn: 'root',
 })
 export class WeatherService {
+  baseUrl = environment.baseUrl;
+
   constructor(private http: HttpClient) {}
 
   geolocationObservable(options): Observable<Object> {
@@ -53,30 +55,24 @@ export class WeatherService {
   }
 
   getAutoCompleted(term: string): Observable<Autocomplete[]> {
-    return this.http
-      .get<Autocomplete[]>(`https://dataservice.accuweather.com/locations/v1/cities/autocomplete?q=${term}&apikey=${environment.apiKey}`)
-      .pipe(
-        tap((data) => console.log('Data: ', JSON.stringify(data))),
-        catchError(this.handleError)
-      );
+    return this.http.get<Autocomplete[]>(`${this.baseUrl}/locations/v1/cities/autocomplete?q=${term}&apikey=${environment.apiKey}`).pipe(
+      tap((data) => console.log('Autocompleted list: ', JSON.stringify(data))),
+      catchError(this.handleError)
+    );
   }
 
   getCurrentConditions(locationKey: string): Observable<CurrentConditions[]> {
-    return this.http
-      .get<any[]>(`https://dataservice.accuweather.com/currentconditions/v1/${locationKey}?apikey=${environment.apiKey}`)
-      .pipe(
-        tap((data) => console.log('Data: ', JSON.stringify(data))),
-        catchError(this.handleError)
-      );
+    return this.http.get<CurrentConditions[]>(`${this.baseUrl}/currentconditions/v1/${locationKey}?apikey=${environment.apiKey}`).pipe(
+      tap((data) => console.log('Current condition: ', JSON.stringify(data))),
+      catchError(this.handleError)
+    );
   }
 
   getFiveDaysForecasts(locationKey: string): Observable<FiveDaysForecasts[]> {
-    return this.http
-      .get<FiveDaysForecasts[]>(`https://dataservice.accuweather.com/forecasts/v1/daily/5day/${locationKey}?apikey=${environment.apiKey}`)
-      .pipe(
-        tap((data) => console.log('Five Days forecasts: ', JSON.stringify(data))),
-        catchError(this.handleError)
-      );
+    return this.http.get<FiveDaysForecasts[]>(`${this.baseUrl}/forecasts/v1/daily/5day/${locationKey}?apikey=${environment.apiKey}`).pipe(
+      tap((data) => console.log('Five days forecasts: ', JSON.stringify(data))),
+      catchError(this.handleError)
+    );
   }
 
   private handleError(err: any) {

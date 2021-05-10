@@ -14,10 +14,10 @@ export const loadCurrentConditions = createAction('[Weather Page]  Load  Current
 export const loadFiveDaysForecasts = createAction('[Weather Page]  Load Five  Days Forecasts', props<{ locationKey: string }>());
 
 /* Filter AutoCompleted List Action */
-export const filteredAutocompletedList = createAction('[Weather Page]  Filter Autocompleted List', props<{ currentLocationKey: string }>());
+export const filteredAutocompletedList = createAction('[Weather Page]  Filter Autocompleted List', props<{ locationKey: string }>());
 
-/* Set Current Coin Action */
-export const setCurrentLocation = createAction('[Weather Page] Set Current Location', props<{ currentLocationKey: string }>());
+/* Set Current Key Coin Action */
+export const setCurrentLocationKey = createAction('[Weather Page] Set Current Location', props<{ locationKey: string }>());
 
 /* Add Location Action */
 export const addLocation = createAction('[Favorites Page]  Add Location', props<{ location: Favorite }>());

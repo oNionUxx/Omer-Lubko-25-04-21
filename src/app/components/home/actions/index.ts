@@ -1,34 +1,34 @@
 import {
   loadAutocompleteOnSuccess,
-  loadAutocompleteOnFailure,
   loadCurrentConditionsOnSuccess,
-  loadCurrentConditionsOnFailure,
   loadFiveDaysForecastsOnSuccess,
+  loadAutocompleteOnFailure,
+  loadCurrentConditionsOnFailure,
   loadFiveDaysForecastsOnFailure,
 } from './weather-api.actions';
 
 import {
+  addLocation,
+  toggleAppTheme,
+  setCurrentLocationKey,
   loadAutocompletedList,
   loadCurrentConditions,
   loadFiveDaysForecasts,
   filteredAutocompletedList,
-  setCurrentLocation,
-  addLocation,
-  toggleAppTheme,
 } from './weather-page.actions';
 
 export {
+  addLocation,
+  toggleAppTheme,
+  setCurrentLocationKey,
   loadAutocompletedList,
   loadCurrentConditions,
   loadFiveDaysForecasts,
   filteredAutocompletedList,
-  setCurrentLocation,
   loadAutocompleteOnSuccess,
-  loadAutocompleteOnFailure,
   loadCurrentConditionsOnSuccess,
-  loadCurrentConditionsOnFailure,
   loadFiveDaysForecastsOnSuccess,
+  loadAutocompleteOnFailure,
+  loadCurrentConditionsOnFailure,
   loadFiveDaysForecastsOnFailure,
-  addLocation,
-  toggleAppTheme,
 };

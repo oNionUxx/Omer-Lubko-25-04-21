@@ -1,13 +1,26 @@
-.navbar {
-  max-height: 50px;
+.navbar.navbar-dark {
   background-color: #424242;
   border-bottom: 2px solid #fff;
   padding: 0px;
+  height: 50px;
+}
+
+.navbar .wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: inherit;
+  padding: 0px 15px;
 }
 
 .navbar .wrapper .navbar-nav {
   display: flex;
   flex-direction: row;
+}
+
+.navbar .wrapper .navbar-nav .nav-item > .nav-link {
+  padding: 0 10px;
 }
 
 .custom-toggle {
@@ -41,16 +54,4 @@
   height: 25px;
   padding: 5px;
   border-radius: 50%;
-}
-
-.navbar .wrapper {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  padding: 0px 15px;
-}
-
-.navbar .wrapper .navbar-nav .nav-item > .nav-link {
-  padding: 0 10px;
 }

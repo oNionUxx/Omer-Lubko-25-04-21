@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 import { Observable } from 'rxjs';
 
@@ -12,11 +12,11 @@ import * as WeatherActions from '../actions';
 import {
   State,
   getAutoCompletedList,
-  getCurrentLocation,
   getCurrentConditions,
   getFiveDaysForecasts,
-  getCurrentList,
   getError,
+  getCurrentLocationKey,
+  getCurrentFavoritesList,
 } from '../state';
 import { WeatherService } from '../weather.service';
 
@@ -27,30 +27,37 @@ import { WeatherService } from '../weather.service';
 })
 export class WeatherShellComponent implements OnInit {
   autocompletedList$: Observable<Autocomplete[]>;
+  currentLocationKey$: Observable<string>;
   currentConditions$: Observable<CurrentConditions[]>;
   fiveDaysForecasts$: Observable<FiveDaysForecasts[]>;
   favoritesList$: Observable<Favorite[]>;
-  selectedLocation$: Observable<Autocomplete>;
   errorMessage$: Observable<string>;
 
-  constructor(private store: Store<State>, private router: Router, private weatherService: WeatherService) {}
+  getFavoriteLocation = null;
+
+  constructor(private store: Store<State>, private router: Router, private activatedRoute: ActivatedRoute) {
+    this.getFavoriteLocation = JSON.parse(this.activatedRoute.snapshot.queryParamMap.get('isFavoritesItem'));
+  }
 
   ngOnInit(): void {
     // Do NOT subscribe here because it uses an async pipe
     // This gets the initial values until the load is complete.
+
     this.autocompletedList$ = this.store.select(getAutoCompletedList);
 
-    this.selectedLocation$ = this.store.select(getCurrentLocation);
+    this.currentLocationKey$ = this.store.select(getCurrentLocationKey);
 
     this.fiveDaysForecasts$ = this.store.select(getFiveDaysForecasts);
 
     this.currentConditions$ = this.store.select(getCurrentConditions);
 
-    this.favoritesList$ = this.store.select(getCurrentList);
+    this.favoritesList$ = this.store.select(getCurrentFavoritesList);
 
     this.errorMessage$ = this.store.select(getError);
 
-    this.locationSelected();
+    if (!this.getFavoriteLocation) {
+      this.locationSelected();
+    }
   }
 
   checkChangedAutocompleteList(term: string): void {
@@ -59,16 +66,14 @@ export class WeatherShellComponent implements OnInit {
     }
   }
 
-  locationSelected(location?: Autocomplete): void {
-    console.log(location);
-    const defaultLocationKey = location ? location.Key : '215854';
-    this.store.dispatch(WeatherActions.setCurrentLocation({ currentLocationKey: defaultLocationKey }));
-    this.store.dispatch(WeatherActions.loadCurrentConditions({ locationKey: defaultLocationKey }));
-    this.store.dispatch(WeatherActions.loadFiveDaysForecasts({ locationKey: defaultLocationKey }));
+  locationSelected(Key?: string): void {
+    this.store.dispatch(WeatherActions.setCurrentLocationKey({ locationKey: Key || '215854' }));
+    this.store.dispatch(WeatherActions.loadCurrentConditions({ locationKey: Key || '215854' }));
+    this.store.dispatch(WeatherActions.loadFiveDaysForecasts({ locationKey: Key || '215854' }));
   }
 
   filterAutocompletedList(selectedLocationKey: string): void {
-    this.store.dispatch(WeatherActions.filteredAutocompletedList({ currentLocationKey: selectedLocationKey }));
+    this.store.dispatch(WeatherActions.filteredAutocompletedList({ locationKey: selectedLocationKey }));
   }
 
   addLocation(location: Favorite): void {

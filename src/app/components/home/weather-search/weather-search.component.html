@@ -1,15 +1,18 @@
 <div class="wrapper">
-    <div class="input-group">
+    <div class="ng-autocomplete">
         <span class="search-icon"><i class="fa fa-search "></i></span>
-        <input type="text" #valueRef class="form-control" (click)="toggleDropdownList()" (keyup)="searchItem($event)"
-            [value]="value" [ngStyle]="{'color' : autocompletedList.length < 1 ? '#ff0000' : '#333'}"
-            list=" autocompletedList" autofocus placeholder="Press any key... ">
-    </div>
+        <ng-autocomplete class="ng-autocomplete-input" [data]="autocompletedList"
+            [(ngModel)]="autocompletedList[0].LocalizedName" [searchKeyword]="keyword" (selected)='selectEvent($event)'
+            (inputChanged)='onChangeSearch($event)' (inputFocused)='onFocused($event)' [itemTemplate]="itemTemplate"
+            focusFirst="true" [notFoundTemplate]="notFoundTemplate" placeholder="Enter location name..">
+        </ng-autocomplete>
 
-    <div class="state-container-dropdown" *ngIf="showDropdownList"
-        [ngStyle]="{'border' : autocompletedList.length < 1 ? '0px' : '1px solid #ccc'}">
-        <div class="state" *ngFor="let item of autocompletedList;">
-            <a class=" state-item" (click)="selectItem(item)"> {{ item?.LocalizedName }}</a>
-        </div>
+        <ng-template #itemTemplate let-item>
+            <a [innerHTML]="item.LocalizedName"></a>
+        </ng-template>
+
+        <ng-template #notFoundTemplate let-notFound>
+            <div [innerHTML]="notFound" [style]="{color: 'red'}" *ngIf="autocompletedList.length < 1"></div>
+        </ng-template>
     </div>
 </div>

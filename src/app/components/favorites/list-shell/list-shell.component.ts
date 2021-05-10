@@ -6,8 +6,8 @@ import { Favorite } from '../../home/weather';
 
 /* NgRx */
 import { Store } from '@ngrx/store';
-import { getCurrentList } from '../../home/state';
-import { Router } from '@angular/router';
+import { getCurrentFavoritesList } from '../../home/state';
+import { NavigationExtras, Router } from '@angular/router';
 
 /* NgRx */
 import { AppState } from '../../store/app.state';
@@ -26,15 +26,22 @@ export class ListShellComponent implements OnInit {
   ngOnInit(): void {
     // Do NOT subscribe here because it uses an async pipe
     // This gets the initial values until the load is complete.
-    this.favoritesList$ = this.store.select(getCurrentList);
+    this.favoritesList$ = this.store.select(getCurrentFavoritesList);
   }
 
   itemWasSelected(item: Favorite) {
     this.store.dispatch(WeatherActions.loadAutocompletedList({ term: item.LocalizedName }));
-    this.store.dispatch(WeatherActions.setCurrentLocation({ currentLocationKey: item.Key }));
+    //this.store.dispatch(WeatherActions.filteredAutocompletedList({ locationKey: item.Key }));
+    this.store.dispatch(WeatherActions.setCurrentLocationKey({ locationKey: item.Key }));
     this.store.dispatch(WeatherActions.loadCurrentConditions({ locationKey: item.Key }));
     this.store.dispatch(WeatherActions.loadFiveDaysForecasts({ locationKey: item.Key }));
 
-    this.router.navigate(['home']);
+    const queryParams: any = {};
+
+    queryParams.isFavoritesItem = JSON.stringify(true);
+    const navigationExtras: NavigationExtras = {
+      queryParams,
+    };
+    this.router.navigate(['home'], navigationExtras);
   }
 }

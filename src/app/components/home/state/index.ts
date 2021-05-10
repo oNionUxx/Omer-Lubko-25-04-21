@@ -26,6 +26,6 @@ export const getCurrentConditions = createSelector(getWeatherFeatureState, (stat
 
 export const getFiveDaysForecasts = createSelector(getWeatherFeatureState, (state) => state.fiveDaysForecasts);
 
-export const getCurrentList = createSelector(getWeatherFeatureState, (state) => state.favoritesList);
+export const getCurrentFavoritesList = createSelector(getWeatherFeatureState, (state) => state.favoritesList);
 
 export const getError = createSelector(getWeatherFeatureState, (state) => state.error);

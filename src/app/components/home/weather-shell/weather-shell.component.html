@@ -1,14 +1,14 @@
 <div class="wrapper">
     <div class="search">
         <pm-weather-search [errorMessage]="errorMessage$ | async" [autocompletedList]="autocompletedList$ | async"
-            [selectedLocation]="selectedLocation$ | async"
+            [currentLocationKey]="currentLocationKey$ | async"
             (changedAutocompletedList)="checkChangedAutocompleteList($event)"
             (locationWasSelected)="locationSelected($any($event))" (listToBeFiltered)="filterAutocompletedList($event)">
         </pm-weather-search>
     </div>
     <div class="info">
         <pm-weather-info [errorMessage]="errorMessage$ | async" [autocompletedList]="autocompletedList$ | async"
-            [selectedLocation]="selectedLocation$ | async" [currentConditions]="currentConditions$ | async"
+            [currentLocationKey]="currentLocationKey$ | async" [currentConditions]="currentConditions$ | async"
             [fiveDaysForecasts]="fiveDaysForecasts$ | async" [favoritesList]="favoritesList$ | async"
             (addSelectedLocation)="addLocation($any($event))">
         </pm-weather-info>

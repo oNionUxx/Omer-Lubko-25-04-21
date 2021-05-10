@@ -3,9 +3,8 @@
         <ul class="list-group" *ngFor="let item of favoritesList">
             <li class="list-group-item city">{{ item?.LocalizedName }}</li>
             <li class="list-group-item text">{{ item.WeatherText }}</li>
-            <li class="list-group-item temperature">{{ item.Temperature.Metric.Value }}&deg;</li>
+            <li class="list-group-item temperature">{{ item.Temperature.Metric.Value | number: '1.0-0' }}&deg;</li>
             <li class="list-group-item undo" (click)="selectItem(item)"><i class="fa fa-undo fa-2x"></i></li>
         </ul>
-
     </div>
 </div>

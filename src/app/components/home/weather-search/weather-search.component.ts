@@ -1,5 +1,7 @@
-import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy, ViewChild, ElementRef } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy, SimpleChange, SimpleChanges } from '@angular/core';
+
 import { FlashMessagesService } from 'angular2-flash-messages';
+
 import { Autocomplete } from '../weather';
 
 @Component({
@@ -8,63 +10,39 @@ import { Autocomplete } from '../weather';
   styleUrls: ['./weather-search.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class WeatherSearchComponent implements OnInit {
+export class WeatherSearchComponent {
+  keyword = 'LocalizedName';
+
   @Input() autocompletedList: Autocomplete[];
-  @Input() selectedLocation: Autocomplete;
+  @Input() currentLocationKey: string;
   @Input() errorMessage: string;
-  @Input() showInfoSection: boolean = true;
 
   @Output() listToBeFiltered = new EventEmitter<string>();
-  @Output() locationWasSelected = new EventEmitter<Autocomplete>();
+  @Output() locationWasSelected = new EventEmitter<string>();
   @Output() changedAutocompletedList = new EventEmitter<Autocomplete[]>();
 
-  @ViewChild('valueRef') valueRef: ElementRef;
-
   constructor(private fm: FlashMessagesService) {}
-  ngOnInit(): void {}
 
-  str = '';
-  value = 'Tel Aviv';
-  showDropdownList = false;
+  onChangeSearch(value) {
+    // fetch remote data from here
+    // and reassign the 'data' which is bind to 'data' property.
+    const q = value.trim();
+    const pattern = /^[a-zA-Z&']+(?:[\s-][a-zA-Z]+)*$/;
 
-  ngOnInt(): void {}
-
-  ngOnChanges(): void {
-    if (this.selectedLocation) {
-      this.value = this.selectedLocation?.LocalizedName;
-    }
-  }
-
-  searchItem(event): void {
     // check for matched pattern
-
-    let pattern = /^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$/;
-    let q = event.target.value.trim();
-    this.showDropdownList = true;
-
-    if (q.match(pattern) && q !== '') {
+    if (pattern.test(q)) {
       this.changedAutocompletedList.emit(q);
     }
-
-    if (q === '') {
-      this.showDropdownList = false;
-    }
-
-    this.valueRef.nativeElement.style.color = '#333';
   }
 
-  selectItem(location: Autocomplete): void {
-    this.clearItem(location);
-    this.toggleDropdownList();
-    this.locationWasSelected.emit(location);
+  selectEvent(item) {
+    // do something with selected item
+    this.locationWasSelected.emit(item.Key);
+    this.listToBeFiltered.emit(item.Key);
   }
 
-  clearItem(location: Autocomplete): void {
-    this.listToBeFiltered.emit(location.Key);
-  }
-
-  toggleDropdownList(): void {
-    this.showDropdownList = !this.showDropdownList;
+  onFocused(e) {
+    // do something when input is focused
   }
 
   displayUserMessage(errorMessage?: string): void {
