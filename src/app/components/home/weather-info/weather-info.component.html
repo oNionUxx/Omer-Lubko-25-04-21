@@ -1,4 +1,4 @@
-<div class="wrapper" *ngIf="currentConditions.length > 0 && currentConditions && fiveDaysForecasts['DailyForecasts'] ">
+<div class="wrapper" *ngIf="autocompletedList.length > 0 && currentConditions && fiveDaysForecasts['DailyForecasts'] ">
     <div class="data">
         <ul class="list-group">
             <li class="list-group-item city">
@@ -42,17 +42,21 @@
                     to' }} favorites</button>
             </li>
 
+
+
             <li class="list-group-item temperature">
-                {{ displayCurrentUnit | number: '1.0-0' }}&deg;
+                {{ (isShowMetric ? currentConditions[0]?.Temperature.Metric.Value :
+                currentConditions[0]?.Temperature.Imperial.Value) | number: '1.0-0' }}&deg;
             </li>
 
             <li class="list-group-item units">
-                <a href="javascript:void(0)" (click)="toggleUnit('c')" class="unit"
+                <a href="javascript:void(0)" (click)="isShowMetric = true" class="unit"
                     [ngClass]="isShowMetric ? 'active' : null ">&deg;{{currentConditions[0]?.Temperature?.Metric?.Unit}}</a>
 
-                <a href="javascript:void(0)" (click)="toggleUnit('f')" class="unit"
+                <a href="javascript:void(0)" (click)="isShowMetric = false" class="unit"
                     [ngClass]="!isShowMetric ? 'active' : null ">&deg;{{currentConditions[0]?.Temperature?.Imperial?.Unit}}</a>
             </li>
+
         </ul>
     </div>
 
@@ -76,7 +80,9 @@
                 <span class="min">
                     {{ item.Temperature?.Minimum?.Value | temperatureConverter: isShowMetric ? 'C' : 'F' }}&deg;
                 </span>
-                -
+
+                <span class="dash">-</span>
+
                 <span class="max">
                     {{ item.Temperature?.Maximum?.Value | temperatureConverter: isShowMetric ? 'C' : 'F' }}&deg;
                 </span>

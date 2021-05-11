@@ -25,9 +25,9 @@ export class WeatherSearchComponent {
   constructor(private fm: FlashMessagesService) {}
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes.autocompletedList && changes.autocompletedList.currentValue[0] && !changes.autocompletedList.firstChange) {
-      this.displayCurrentLocation = changes.autocompletedList.currentValue[0].LocalizedName;
-    }
+    // if (changes.autocompletedList && changes.autocompletedList.currentValue[0] && !changes.autocompletedList.firstChange) {
+    //   this.displayCurrentLocation = changes.autocompletedList.currentValue[0].LocalizedName;
+    // }
   }
 
   onChangeSearch(value) {

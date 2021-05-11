@@ -9,6 +9,9 @@ import { FlashMessagesService } from 'angular2-flash-messages';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class WeatherResultsComponent implements OnInit {
+  found: any;
+  isShowMetric = true;
+
   @Input() errorMessage: string;
   @Input() currentLocationKey: string;
   @Input() favoritesList: Favorite[];
@@ -18,45 +21,23 @@ export class WeatherResultsComponent implements OnInit {
 
   @Output() addSelectedLocation = new EventEmitter<Favorite>();
 
-  found: any;
-  isShowMetric = true;
-  displayCurrentUnit = -1;
-  displayLocationName = 'Tel Aviv';
-
   constructor(private fm: FlashMessagesService) {}
 
   ngOnInit(): void {}
 
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes.currentConditions && changes.currentConditions.currentValue[0]) {
-      this.displayCurrentUnit = changes.currentConditions.currentValue[0].Temperature.Metric.Value;
-    }
-
-    if (changes.autocompletedList && changes.autocompletedList.currentValue[0] && !changes.autocompletedList.firstChange) {
-      this.displayLocationName = changes.autocompletedList.currentValue[0].LocalizedName;
-    }
-
+  ngOnChanges(): void {
     this.found = this.favoritesList.find((value) => value.Key === this.currentLocationKey);
   }
 
   addToFavorites(): void {
     const location = {
-      Key: this.autocompletedList[0].Key,
+      Key: this.currentLocationKey,
       LocalizedName: this.autocompletedList[0].LocalizedName,
       WeatherText: this.currentConditions[0].WeatherText,
       Temperature: this.currentConditions[0].Temperature,
     };
 
     this.addSelectedLocation.emit(location);
-  }
-
-  toggleUnit(unit: string) {
-    if (unit === 'c') {
-      this.displayCurrentUnit = this.currentConditions[0]?.Temperature.Metric?.Value;
-    } else {
-      this.displayCurrentUnit = this.currentConditions[0]?.Temperature.Imperial?.Value;
-    }
-    this.isShowMetric = !this.isShowMetric;
   }
 
   displayUserMessage(errorMessage?: string): void {
