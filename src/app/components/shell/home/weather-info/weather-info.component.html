@@ -1,0 +1,95 @@
+<div class="wrapper" *ngIf="fiveDaysForecasts currentConditions">
+    <div class="data">
+        <ul class="list-group">
+            <li class="list-group-item city">
+                {{ selectedLocation?.LocalizedName ? selectedLocation?.LocalizedName : prevLocalizedName }}
+            </li>
+
+            <li class="list-group-item day">
+                {{ currentConditions?.LocalObservationDateTime | date: 'EEEE'}}
+            </li>
+
+            <li class="list-group-item date">
+                {{ currentConditions?.LocalObservationDateTime | date: 'shortDate'}}
+            </li>
+
+            <li class="list-group-item time">
+                <i class="fa fa-clock-o clock-icon"></i>
+                Refreshed at {{ currentConditions?.LocalObservationDateTime | date: 'h:mm:ss a' }}
+            </li>
+        </ul>
+
+        <ul class="list-group">
+            <li class="list-group-item image">
+                <img class="image-icon" *ngIf="currentConditions?.IsDayTime"
+                    src="../../../../../../assets/icons/{{ fiveDaysForecasts?.DailyForecasts[0].Day.Icon > 8 ? fiveDaysForecasts?.DailyForecasts[0].Day.Icon : '0' + fiveDaysForecasts?.DailyForecasts[0].Day.Icon }}-s.png"
+                    alt="{{ fiveDaysForecasts?.DailyForecasts[0].Day.Icon }}">
+
+                <img class="image-icon" *ngIf="!currentConditions?.IsDayTime" src="../../../../../../assets/icons/{{
+                         fiveDaysForecasts?.DailyForecasts[0].Night.Icon > 8 ? fiveDaysForecasts?.DailyForecasts[0].Night.Icon : 0 + fiveDaysForecasts?.DailyForecasts[0].Night.Icon
+                         }}-s.png" alt="{{ fiveDaysForecasts?.DailyForecasts[0].Night.Icon }}">
+            </li>
+
+            <li class="list-group-item text">
+                {{ currentConditions?.WeatherText }}
+            </li>
+        </ul>
+
+        <ul class="list-group">
+            <li class="list-group-item">
+                <i class="fa fa-heart fa-2x heart-icon" aria-hidden="true"></i>
+                <button type="button" class="btn btn-dark" (click)="addToFavorites()">
+                    {{ found ? 'Remove from ' : 'Add to' }} favorites
+                </button>
+            </li>
+
+            <li class="list-group-item temperature">
+                {{
+                (isShowMetric ? currentConditions?.Temperature.Metric.Value :
+                currentConditions?.Temperature.Imperial.Value) | number: '1.0-0'
+                }}&deg;
+            </li>
+
+            <li class="list-group-item units">
+                <a href="javascript:void(0)" (click)="isShowMetric = !isShowMetric" class="unit"
+                    [ngClass]="isShowMetric ? 'active' : null"> &deg;
+                    {{ currentConditions?.Temperature?.Metric.Unit }}
+                </a>
+                <a href="javascript:void(0)" (click)="isShowMetric = !isShowMetric" class="unit"
+                    [ngClass]="!isShowMetric ? 'active' : null"> &deg;
+                    {{ currentConditions?.Temperature?.Imperial?.Unit }}
+                </a>
+        </ul>
+    </div>
+
+
+    <div class="forecast">
+        <ul class="list-group" *ngFor="let item of fiveDaysForecasts.DailyForecasts">
+            <li class="list-group-item day">
+                {{ item?.Date | date: 'EEEE' | slice: 0:3 }}
+            </li>
+
+            <li class="list-group-item image">
+                <img class="image-icon" *ngIf="currentConditions?.IsDayTime"
+                    src="../../../../../../assets/icons/{{item?.Day?.Icon > 8 ? item?.Day?.Icon : '0' + item?.Day?.Icon }}-s.png"
+                    alt="{{item?.Day?.Icon}}">
+
+                <img class="image-icon" *ngIf="!currentConditions?.IsDayTime"
+                    src="../../../../../../assets/icons/{{item?.Night?.Icon > 8 ? item?.Night?.Icon : '0' + item?.Night?.Icon }}-s.png"
+                    alt="{{item?.Day?.Icon}}">
+            </li>
+
+            <li class="list-group-item temperature">
+                <span class="min">
+                    {{ item.Temperature?.Minimum?.Value | temperatureConverter: isShowMetric ? 'C' : 'F' }}&deg;
+                </span>
+
+                <span class="dash">-</span>
+
+                <span class="max">
+                    {{ item.Temperature?.Maximum?.Value | temperatureConverter: isShowMetric ? 'C' : 'F' }}&deg;
+                </span>
+            </li>
+        </ul>
+    </div>
+</div>

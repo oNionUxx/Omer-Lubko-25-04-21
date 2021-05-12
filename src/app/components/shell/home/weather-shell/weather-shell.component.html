@@ -1,0 +1,16 @@
+<div class="wrapper">
+    <div class="search">
+        <pm-weather-search [errorMessage]="errorMessage$ | async" [autocompletedList]="autocompletedList$ | async"
+            [selectedLocation]="selectedLocation$ | async"
+            (changedAutocompletedList)="checkChangedAutocompleteList($event)"
+            (locationWasSelected)="locationSelected($any($event))">
+        </pm-weather-search>
+    </div>
+
+    <div class="info">
+        <pm-weather-info [errorMessage]="errorMessage$ | async" [selectedLocation]="selectedLocation$ | async"
+            [currentConditions]="currentConditions$ | async" [fiveDaysForecasts]="fiveDaysForecasts$ | async"
+            [favoritesList]="favoritesList$ | async" (addSelectedLocation)="addLocation($any($event))">
+        </pm-weather-info>
+    </div>
+</div>

@@ -5,8 +5,7 @@
 export const environment = {
   production: false,
   baseUrl: 'http://dataservice.accuweather.com',
-  apiKey: 'TAwOc2TY6aXBAVoCMOkQHRlp9GQoGCqf',
-  toggleAppTheme: true,
+  apiKey: '4YZoCKJVsjUvSXm924KGZ3I5yKaVETR5',
 };
 /*
  * For easier debugging in development mode, you can import the following file

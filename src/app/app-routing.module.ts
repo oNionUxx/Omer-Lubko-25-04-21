@@ -9,12 +9,12 @@ const appRoutes: Routes = [
     children: [
       {
         path: 'home',
-        loadChildren: () => import('./components/home/weather.module').then((h) => h.WeatherModule),
+        loadChildren: () => import('./components/shell/home/weather.module').then((h) => h.WeatherModule),
       },
 
       {
         path: 'favorites',
-        loadChildren: () => import('./components/favorites/favorites.module').then((f) => f.FavoritesModule),
+        loadChildren: () => import('./components/shell/favorites/favorites.module').then((f) => f.FavoritesModule),
       },
     ],
   },

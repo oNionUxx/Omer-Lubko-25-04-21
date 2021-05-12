@@ -1,0 +1,19 @@
+<nav class="navbar navbar-dark">
+    <div class="wrapper">
+        <a class="navbar-brand">{{ title }}</a>
+
+        <i class="custom-toggle" (click)="toggleAppTheme()" [ngClass]="selectedAppTheme ? 'right' : 'left'"
+            aria-hidden="true">
+        </i>
+
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item" routerLinkActive="active">
+                <a class="nav-link" routerLink='/home'>Home</a>
+            </li>
+
+            <li class="nav-item" routerLinkActive="active">
+                <a class="nav-link" routerLink='/favorites'>Favorites</a>
+            </li>
+        </ul>
+    </div>
+</nav>

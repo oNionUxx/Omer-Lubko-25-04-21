@@ -1,0 +1,28 @@
+:host {
+  width: 100%;
+}
+
+.custom-form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.custom-form .ng-autocomplete {
+  position: relative;
+  margin: 0 auto;
+}
+
+::ng-deep .custom-form .autocomplete-container .input-container input {
+  padding: 0 30px !important;
+}
+
+.custom-form .ng-autocomplete .search-icon {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 30px;
+  z-index: 99999;
+}
