@@ -16,7 +16,7 @@ import * as WeatherActions from '../../home/actions';
 @Component({
   selector: 'app-list-shell',
   templateUrl: './list-shell.component.html',
-  styleUrls: ['./list-shell.component.css'],
+  styleUrls: ['./list-shell.component.scss'],
 })
 export class ListShellComponent implements OnInit {
   favoritesList$: Observable<Favorite[]>;

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { Router, ActivatedRoute } from '@angular/router';
 
-import { Observable } from 'rxjs';
+import { combineLatest, Observable } from 'rxjs';
 
 import { Autocomplete, CurrentConditions, FiveDaysForecasts, Favorite } from '../weather';
 
@@ -20,19 +20,23 @@ import {
   getCurrentFavoritesList,
 } from '../state';
 import { WeatherService } from '../weather.service';
+import { filter, map } from 'rxjs/operators';
+import { WeatherState } from '../state/weather.state';
 
 @Component({
   selector: 'app-weather-shell',
   templateUrl: './weather-shell.component.html',
-  styleUrls: ['./weather-shell.component.css'],
+  styleUrls: ['./weather-shell.component.scss'],
 })
 export class WeatherShellComponent implements OnInit {
   autocompletedList$: Observable<Autocomplete[]>;
   selectedLocation$: Observable<Autocomplete>;
-  currentConditions$: Observable<CurrentConditions>;
+  currentConditions$: Observable<CurrentConditions[]>;
   fiveDaysForecasts$: Observable<FiveDaysForecasts>;
   favoritesList$: Observable<Favorite[]>;
   errorMessage$: Observable<string>;
+
+  vm$: Observable<any>;
 
   getFavoriteLocation = null;
 
@@ -59,6 +63,25 @@ export class WeatherShellComponent implements OnInit {
     if (!this.getFavoriteLocation) {
       this.locationSelected();
     }
+
+    this.vm$ = combineLatest([
+      this.autocompletedList$,
+      this.selectedLocation$,
+      this.currentConditions$,
+      this.fiveDaysForecasts$,
+      this.favoritesList$,
+      this.errorMessage$,
+    ]).pipe(
+      filter(([autocompletedList]) => Boolean(autocompletedList)),
+      map(([autocompletedList, selectedLocation, currentConditions, fiveDaysForecasts, favoritesList, errorMessage]) => ({
+        autocompletedList,
+        selectedLocation,
+        currentConditions,
+        fiveDaysForecasts,
+        favoritesList,
+        errorMessage,
+      }))
+    );
   }
 
   checkChangedAutocompleteList(term: string): void {

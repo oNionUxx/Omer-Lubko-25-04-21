@@ -38,9 +38,11 @@ flash-messages {
   color: #333 !important;
 }
 
-.list-group .list-group-item {
-  background-color: transparent;
-  border: 0px;
+.list-group {
+  .list-group-item {
+    background-color: transparent;
+    border: 0px;
+  }
 }
 
 @media screen and (max-width: 600px) {

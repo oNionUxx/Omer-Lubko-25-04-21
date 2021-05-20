@@ -22,7 +22,9 @@ export class MenuComponent implements OnInit, OnDestroy {
 
   subscription: Subscription;
 
-  constructor(private store: Store<State>, private renderer: Renderer2) {}
+  constructor(private store: Store<State>, private renderer: Renderer2) {
+    this.renderer.addClass(document.body, 'bright');
+  }
 
   ngOnInit(): void {
     this.selectedAppTheme$ = this.store.select(getAppTheme);
@@ -30,6 +32,7 @@ export class MenuComponent implements OnInit, OnDestroy {
     this.subscription = this.selectedAppTheme$.subscribe((data) => {
       this.selectedAppTheme = data;
       this.renderer.addClass(document.body, this.selectedAppTheme ? 'bright' : 'dark');
+      this.renderer.removeClass(document.body, !this.selectedAppTheme ? 'bright' : 'dark');
     });
   }
 
@@ -37,7 +40,7 @@ export class MenuComponent implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
   }
 
-  toggleAppTheme(): void {
+  clickEvent(): void {
     this.store.dispatch(toggleAppTheme());
   }
 }

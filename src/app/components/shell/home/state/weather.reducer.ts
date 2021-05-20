@@ -1,30 +1,6 @@
 import { createReducer, on } from '@ngrx/store';
+import { WeatherState, initialState } from './weather.state';
 import * as WeatherActions from '../actions';
-import { Autocomplete, CurrentConditions, FiveDaysForecasts, Favorite } from '../weather';
-
-export interface WeatherState {
-  autocompletedList: Autocomplete[];
-  currentConditions: CurrentConditions[];
-  fiveDaysForecasts: FiveDaysForecasts;
-  favoritesList: Favorite[];
-  currentLocationKey: string | null;
-  error: string;
-}
-
-/* Initial Weather state */
-const initialState: WeatherState = {
-  autocompletedList: [
-    {
-      Key: '215854',
-      LocalizedName: 'Tel Aviv',
-    },
-  ],
-  currentConditions: [],
-  fiveDaysForecasts: null,
-  favoritesList: [],
-  currentLocationKey: null,
-  error: '',
-};
 
 export const weatherReducer = createReducer<WeatherState>(
   initialState,

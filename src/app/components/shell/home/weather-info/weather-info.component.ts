@@ -1,11 +1,12 @@
 import { Component, Input, OnInit, ChangeDetectionStrategy, Output, EventEmitter, SimpleChange, SimpleChanges } from '@angular/core';
-import { Autocomplete, CurrentConditions, FiveDaysForecasts, Favorite } from '../weather';
+import { Favorite } from '../weather';
 import { FlashMessagesService } from 'angular2-flash-messages';
+import { ViewModel, WeatherState } from '../state/weather.state';
 
 @Component({
   selector: 'pm-weather-info',
   templateUrl: './weather-info.component.html',
-  styleUrls: ['./weather-info.component.css'],
+  styleUrls: ['./weather-info.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class WeatherResultsComponent implements OnInit {
@@ -13,12 +14,8 @@ export class WeatherResultsComponent implements OnInit {
   isShowMetric = true;
   prevLocalizedName: string;
 
-  @Input() errorMessage: string;
-  @Input() selectedLocation: Autocomplete;
+  @Input() vm: ViewModel;
   @Input() favoritesList: Favorite[];
-  @Input() currentConditions: CurrentConditions;
-  @Input() fiveDaysForecasts: FiveDaysForecasts;
-
   @Output() addSelectedLocation = new EventEmitter<Favorite>();
 
   constructor(private fm: FlashMessagesService) {}
@@ -26,21 +23,22 @@ export class WeatherResultsComponent implements OnInit {
   ngOnInit(): void {}
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes.favoritesList) {
-      this.found = this.favoritesList.find((value) => value.Key === this.selectedLocation.Key);
-    }
+    if (changes.vm) {
+      this.found = this.favoritesList.find((value) => value.Key === this.vm.selectedLocation.Key);
+      console.log();
 
-    if (changes.selectedLocation && changes.selectedLocation.previousValue) {
-      this.prevLocalizedName = changes.selectedLocation.previousValue.LocalizedName;
+      if (changes.vm.previousValue && changes.vm.previousValue.selectedLocation) {
+        this.prevLocalizedName = changes.vm.previousValue.selectedLocation.LocalizedName;
+      }
     }
   }
 
   addToFavorites(): void {
     const location = {
-      Key: this.selectedLocation.Key,
-      LocalizedName: this.selectedLocation.LocalizedName,
-      WeatherText: this.currentConditions.WeatherText,
-      Temperature: this.currentConditions.Temperature,
+      Key: this.vm.selectedLocation.Key,
+      LocalizedName: this.vm.selectedLocation.LocalizedName,
+      WeatherText: this.vm.currentConditions[0].WeatherText,
+      Temperature: this.vm.currentConditions[0].Temperature,
     };
 
     this.addSelectedLocation.emit(location);

@@ -4,7 +4,7 @@ import { Favorite } from '../../home/weather';
 @Component({
   selector: 'pm-list-data',
   templateUrl: './list-data.component.html',
-  styleUrls: ['./list-data.component.css'],
+  styleUrls: ['./list-data.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ListDataComponent implements OnInit {

@@ -38,7 +38,10 @@ export class WeatherEffects {
             this.store.dispatch(toggleSpinner({ status: false }));
             return WeatherActions.loadCurrentConditionsOnSuccess({ currentConditions });
           }),
-          catchError((err) => of(WeatherActions.loadCurrentConditionsOnFailure({ err })))
+          catchError((err) => {
+            this.store.dispatch(toggleSpinner({ status: false }));
+            return of(WeatherActions.loadCurrentConditionsOnFailure({ err }));
+          })
         )
       )
     );
@@ -50,8 +53,14 @@ export class WeatherEffects {
       ofType(WeatherActions.loadFiveDaysForecasts),
       exhaustMap((action) =>
         this.weatherService.getFiveDaysForecasts(action.locationKey).pipe(
-          map((fiveDaysForecasts) => WeatherActions.loadFiveDaysForecastsOnSuccess({ fiveDaysForecasts })),
-          catchError((err) => of(WeatherActions.loadFiveDaysForecastsOnFailure({ err })))
+          map((fiveDaysForecasts) => {
+            this.store.dispatch(toggleSpinner({ status: false }));
+            return WeatherActions.loadFiveDaysForecastsOnSuccess({ fiveDaysForecasts });
+          }),
+          catchError((err) => {
+            this.store.dispatch(toggleSpinner({ status: false }));
+            return of(WeatherActions.loadFiveDaysForecastsOnFailure({ err }));
+          })
         )
       )
     );

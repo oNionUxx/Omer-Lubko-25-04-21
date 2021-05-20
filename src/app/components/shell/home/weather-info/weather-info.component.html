@@ -1,37 +1,37 @@
-<div class="wrapper" *ngIf="fiveDaysForecasts currentConditions">
+<div class="wrapper" *ngIf="vm.fiveDaysForecasts">
     <div class="data">
         <ul class="list-group">
             <li class="list-group-item city">
-                {{ selectedLocation?.LocalizedName ? selectedLocation?.LocalizedName : prevLocalizedName }}
+                {{ vm.selectedLocation?.LocalizedName ? vm.selectedLocation?.LocalizedName : prevLocalizedName }}
             </li>
 
             <li class="list-group-item day">
-                {{ currentConditions?.LocalObservationDateTime | date: 'EEEE'}}
+                {{ vm.currentConditions[0]?.LocalObservationDateTime | date: 'EEEE'}}
             </li>
 
             <li class="list-group-item date">
-                {{ currentConditions?.LocalObservationDateTime | date: 'shortDate'}}
+                {{ vm.currentConditions[0]?.LocalObservationDateTime | date: 'shortDate'}}
             </li>
 
             <li class="list-group-item time">
                 <i class="fa fa-clock-o clock-icon"></i>
-                Refreshed at {{ currentConditions?.LocalObservationDateTime | date: 'h:mm:ss a' }}
+                Refreshed at {{ vm.currentConditions[0]?.LocalObservationDateTime | date: 'h:mm:ss a' }}
             </li>
         </ul>
 
         <ul class="list-group">
             <li class="list-group-item image">
-                <img class="image-icon" *ngIf="currentConditions?.IsDayTime"
-                    src="../../../../../../assets/icons/{{ fiveDaysForecasts?.DailyForecasts[0].Day.Icon > 8 ? fiveDaysForecasts?.DailyForecasts[0].Day.Icon : '0' + fiveDaysForecasts?.DailyForecasts[0].Day.Icon }}-s.png"
-                    alt="{{ fiveDaysForecasts?.DailyForecasts[0].Day.Icon }}">
+                <img class="image-icon" *ngIf="vm.currentConditions[0]?.IsDayTime"
+                    src="../../../../../../assets/icons/{{ vm.fiveDaysForecasts?.DailyForecasts[0].Day.Icon > 8 ? vm.fiveDaysForecasts?.DailyForecasts[0].Day.Icon : '0' + vm.fiveDaysForecasts?.DailyForecasts[0].Day.Icon }}-s.png"
+                    alt="{{ vm.fiveDaysForecasts?.DailyForecasts[0].Day.Icon }}">
 
-                <img class="image-icon" *ngIf="!currentConditions?.IsDayTime" src="../../../../../../assets/icons/{{
-                         fiveDaysForecasts?.DailyForecasts[0].Night.Icon > 8 ? fiveDaysForecasts?.DailyForecasts[0].Night.Icon : 0 + fiveDaysForecasts?.DailyForecasts[0].Night.Icon
-                         }}-s.png" alt="{{ fiveDaysForecasts?.DailyForecasts[0].Night.Icon }}">
+                <img class="image-icon" *ngIf="!vm.currentConditions[0]?.IsDayTime" src="../../../../../../assets/icons/{{
+                    vm.fiveDaysForecasts?.DailyForecasts[0].Night.Icon > 8 ? vm.fiveDaysForecasts?.DailyForecasts[0].Night.Icon : 0 + vm.fiveDaysForecasts?.DailyForecasts[0].Night.Icon
+                         }}-s.png" alt="{{ vm.fiveDaysForecasts?.DailyForecasts[0].Night.Icon }}">
             </li>
 
             <li class="list-group-item text">
-                {{ currentConditions?.WeatherText }}
+                {{ vm.currentConditions[0]?.WeatherText }}
             </li>
         </ul>
 
@@ -45,38 +45,38 @@
 
             <li class="list-group-item temperature">
                 {{
-                (isShowMetric ? currentConditions?.Temperature.Metric.Value :
-                currentConditions?.Temperature.Imperial.Value) | number: '1.0-0'
+                (isShowMetric ? vm.currentConditions[0]?.Temperature.Metric.Value :
+                vm.currentConditions[0]?.Temperature.Imperial.Value) | number: '1.0-0'
                 }}&deg;
             </li>
 
             <li class="list-group-item units">
                 <a href="javascript:void(0)" (click)="isShowMetric = !isShowMetric" class="unit"
                     [ngClass]="isShowMetric ? 'active' : null"> &deg;
-                    {{ currentConditions?.Temperature?.Metric.Unit }}
+                    {{ vm.currentConditions[0]?.Temperature.Metric.Unit }}
                 </a>
                 <a href="javascript:void(0)" (click)="isShowMetric = !isShowMetric" class="unit"
                     [ngClass]="!isShowMetric ? 'active' : null"> &deg;
-                    {{ currentConditions?.Temperature?.Imperial?.Unit }}
+                    {{ vm.currentConditions[0]?.Temperature.Imperial?.Unit }}
                 </a>
         </ul>
     </div>
 
 
     <div class="forecast">
-        <ul class="list-group" *ngFor="let item of fiveDaysForecasts.DailyForecasts">
+        <ul class="list-group" *ngFor="let item of vm.fiveDaysForecasts.DailyForecasts">
             <li class="list-group-item day">
                 {{ item?.Date | date: 'EEEE' | slice: 0:3 }}
             </li>
 
             <li class="list-group-item image">
-                <img class="image-icon" *ngIf="currentConditions?.IsDayTime"
-                    src="../../../../../../assets/icons/{{item?.Day?.Icon > 8 ? item?.Day?.Icon : '0' + item?.Day?.Icon }}-s.png"
-                    alt="{{item?.Day?.Icon}}">
+                <img class="image-icon" *ngIf="vm.currentConditions[0]?.IsDayTime"
+                    src="../../../../../../assets/icons/{{item?.Day?.Icon > 8 ? item?.Day.Icon : '0' + item?.Day.Icon }}-s.png"
+                    alt="{{item?.Day.Icon}}">
 
-                <img class="image-icon" *ngIf="!currentConditions?.IsDayTime"
-                    src="../../../../../../assets/icons/{{item?.Night?.Icon > 8 ? item?.Night?.Icon : '0' + item?.Night?.Icon }}-s.png"
-                    alt="{{item?.Day?.Icon}}">
+                <img class="image-icon" *ngIf="!vm.currentConditions[0]?.IsDayTime"
+                    src="../../../../../../assets/icons/{{item?.Night.Icon > 8 ? item?.Night.Icon : '0' + item?.Night.Icon }}-s.png"
+                    alt="{{item?.Day.Icon}}">
             </li>
 
             <li class="list-group-item temperature">

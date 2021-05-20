@@ -1,6 +1,6 @@
 export interface SharedState {
-  toggleAppTheme: boolean;
-  toggleSpinner: boolean;
+  toggleAppTheme?: boolean;
+  toggleSpinner?: boolean;
 }
 
 /* Initial App state */

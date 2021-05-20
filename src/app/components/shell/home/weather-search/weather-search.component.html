@@ -1,7 +1,7 @@
 <form [formGroup]="customForm" class="custom-form">
     <div class="ng-autocomplete">
         <span class="search-icon"><i class="fa fa-search "></i></span>
-        <ng-autocomplete class="ng-autocomplete-input" [data]="autocompletedList" formControlName="LocalizedName"
+        <ng-autocomplete class="ng-autocomplete-input" [data]="vm.autocompletedList" formControlName="LocalizedName"
             [searchKeyword]="customForm.controls['keyword'].value" (selected)='selectEvent($event)'
             (inputChanged)='onChangeSearch($event)' (inputFocused)='onFocused($event)' [itemTemplate]="itemTemplate"
             focusFirst="true" [notFoundTemplate]="notFoundTemplate" placeholder="Enter location name..">
@@ -12,7 +12,7 @@
         </ng-template>
 
         <ng-template #notFoundTemplate let-notFound>
-            <div *ngIf="autocompletedList.length < 1" [innerHTML]="notFound" [style]="{ color: 'red' }"></div>
+            <div *ngIf="vm.autocompletedList.length < 1" [innerHTML]="notFound" [style]="{ color: 'red' }"></div>
         </ng-template>
     </div>
 </form>

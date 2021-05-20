@@ -9,15 +9,13 @@ import { Autocomplete } from '../weather';
 @Component({
   selector: 'pm-weather-search',
   templateUrl: './weather-search.component.html',
-  styleUrls: ['./weather-search.component.css'],
+  styleUrls: ['./weather-search.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class WeatherSearchComponent implements OnInit, OnChanges {
   customForm: FormGroup;
 
-  @Input() errorMessage: string;
-  @Input() selectedLocation: Autocomplete;
-  @Input() autocompletedList: Autocomplete[];
+  @Input() vm: any;
 
   @Output() locationWasSelected = new EventEmitter<string>();
   @Output() changedAutocompletedList = new EventEmitter<Autocomplete[]>();
@@ -33,8 +31,8 @@ export class WeatherSearchComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     // patch form with value from the store
-    if (this.selectedLocation) {
-      const locationName = this.selectedLocation as Autocomplete;
+    if (this.vm.selectedLocation) {
+      const locationName = this.vm.selectedLocation as Autocomplete;
       this.populateForm(locationName);
     }
   }
@@ -52,6 +50,8 @@ export class WeatherSearchComponent implements OnInit, OnChanges {
     const q = value.trim();
 
     if (q !== '') {
+      console.log(q);
+
       this.changedAutocompletedList.emit(q);
     }
   }
